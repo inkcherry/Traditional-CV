@@ -3,50 +3,46 @@
 #include<iostream>
 #include <cmath>
 #include <vector>
+const double PI = 3.141592653589793238462;
 using namespace std;
-template <typename t>
+template <typename T>
 struct complex
 {
 	explicit complex() { real = 0; img = 0; }
-	explicit complex(t r,t i) { real = r; img = i; }
-	t real;   //实部
-	t img;    //虚部
+	explicit complex(T r, T i) { real = r; img = i; }
+	T real;   //实部
+	T img;    //虚部
 };
 
-const double pi = 3.141592653589793238462;
-template <typename t>
-void  dft_2d(const vector<std::vector<t>>&input_matrix, vector<std::vector<complex<t>>>&output_matrix); //傅里叶变换
 
-template <typename t>
-void show_matrix(const vector<vector<complex<t>>>&outpu_matrix);   //展示傅里叶变换之后的矩阵
+template<typename T>
+using f_2A_matrix = vector<std::vector<complex<T>>>; //包含虚数部分双通道矩阵
 
-//template <typename t>
-//void idft_2d(t **inpurarray, t ***outputarray, int size);//傅里叶逆变换
+template<typename T>
+using f_1A_matrix = vector<std::vector<T>>;    //单通道2d矩阵
 
-template <typename t>
-void  init_matrix(t inputarray[][2], int height, int width, vector<std::vector<t>>&vec)
-{
-	for (int i = 0; i < height; i++)
-	{
-		vector<t> temp;
-		for (int j = 0; j < width; j++)
-		{
-			temp.push_back(inputarray[i][j]);
-		}
-		vec.push_back(temp);
-	}
-}
-template <typename t>
-void show_matrix(const vector<std::vector<t>>&vec)
-{
-	for (auto i : vec)
-	{
-		for (auto j : i)
-			cout << j<<" ";
-		cout << "\n";
-	}
-}
-void test(int **a) {}
+
+template <typename T>
+void  dft_2d(const f_1A_matrix<T>&input_matrix, f_2A_matrix<T>&output_matrix); //傅里叶变换
+
+template<typename T>
+void idft_2d(const  f_2A_matrix<T>& input_matrix, f_1A_matrix<T>&outpu_matritx); //傅里叶逆变换
+
+
+template <typename T>
+void show_matrix(const f_2A_matrix<T>&outpu_matrix);
+
+template <typename T>
+void show_matrix(const f_1A_matrix<T>&vec);
+
+template <typename T>
+void  init_matrix(T inputarray[][2], int height, int width, f_1A_matrix<T>&vec);
+
+
+
+
+
+// main
 int main()
 {
 	double inarr[3][2] = { { 1,2 },{ 2,4 },{ 3,5 } };
@@ -57,13 +53,23 @@ int main()
 	show_matrix(inputarr);
 	dft_2d(inputarr, outputarr);
 	show_matrix(outputarr);
+
+    //逆运算
+	std::vector<std::vector<double> > inverse_inputarr;
+	idft_2d(outputarr, inverse_inputarr);
+
+	std::cout << "逆变换后还原的矩阵"<<std::endl;
+	show_matrix(inverse_inputarr);
 	cin.get();
 	return 0;
 }
 
 
-template <typename t>
-void dft_2d(const vector<std::vector<t>>&input_matrix, vector<std::vector<complex<t>>>&output_matrix)
+
+
+//函数定义
+template <typename T>
+void dft_2d(const f_1A_matrix<T>&input_matrix, f_2A_matrix<T>&output_matrix)
 {
 
 	//运算以double形式运算，展示数据以原数据类型展示
@@ -72,13 +78,13 @@ void dft_2d(const vector<std::vector<t>>&input_matrix, vector<std::vector<comple
 
 
 
-	vector<std::vector<complex<t>>> temp_matrix;
+	f_2A_matrix<T> temp_matrix;
 	for (int i = 0; i < height; i++)
 	{
-		vector<complex<t>> temp;
+		vector<complex<T>> temp;
 		for (int j = 0; j < width; j++)
 		{
-			complex<t> temp_complex;				//2通道 默认构造0
+			complex<T> temp_complex;				//2通道 默认构造0
 			temp.push_back(temp_complex);
 		}
 		output_matrix.push_back(temp);
@@ -97,7 +103,7 @@ void dft_2d(const vector<std::vector<t>>&input_matrix, vector<std::vector<comple
 		for (int y = 0; y < n; y++)
 		{
 
-			double  t = 2.0*pi*(double)(y) / (double)(n);
+			double  t = 2.0*PI*(double)(y) / (double)(n);
 			for (int v = 0; v < n; v++) {
 				double m_var = t*(double)(v);  //uy/n
 				temp_matrix[u][y].real += input_matrix[u][v] * cos(m_var);
@@ -111,7 +117,7 @@ void dft_2d(const vector<std::vector<t>>&input_matrix, vector<std::vector<comple
 	for (int x = 0; x < m; x++) {
 		for (int y = 0; y < n; y++)
 		{
-			double t = 2.0*pi*(double)(x) / (double)(m);
+			double t = 2.0*PI*(double)(x) / (double)(m);
 			for (int u = 0; u < m; ++u)
 			{
 				double m_var = t*double(u);  //ux/m
@@ -129,28 +135,112 @@ void dft_2d(const vector<std::vector<t>>&input_matrix, vector<std::vector<comple
 }
 
 
-template <typename t>
-void show_matrix(const vector<vector<complex<t>>>&output_matrix)
+template <typename T>
+void show_matrix(const f_2A_matrix<T>&output_matrix)
 {
 	std::cout << "real part" << std::endl; //实
 	for (auto i : output_matrix)
 	{
 		for (auto j : i)
-			std::cout << j.real<<",";
+			std::cout << j.real << ",";
 		cout << "\n";
 	}
 	std::cout << "\nimg part" << std::endl;
 	for (auto i : output_matrix)
 	{
 		for (auto j : i)
-			std::cout << j.img<<",";
+			std::cout << j.img << ",";
 		cout << "\n";
 	}
 	return;
 }
-//template <typename t>
-//void idft(t **inputarray, t ***outputarray, int size)
-//{
-//	return;
-//}
 
+template<typename T>
+void idft_2d(const f_2A_matrix<T>& input_matrix,f_1A_matrix<T>&output_matrix)
+{
+
+	int height = input_matrix.size();
+	int width = input_matrix.front().size();
+
+
+	const int M = height;
+	const int N = width;
+	const double temp_sqrt = 1.0 / sqrt(M * N);  //乘积1
+	f_2A_matrix<T> temp_matrix;                   // 辅助运算的2A矩阵
+
+	for (int i = 0; i < height; i++)
+	{
+		vector<complex<T>> temp_2A_node;
+		vector<T> temp_1A_node;
+		for (int j = 0; j < width; j++)
+		{
+			complex<T> temp_complex;				//2通道 默认构造0
+			temp_2A_node.push_back(temp_complex);
+			temp_1A_node.push_back(0);
+		}
+		output_matrix.push_back(temp_1A_node);
+		temp_matrix.push_back(temp_2A_node);
+	}
+
+
+
+	for (int x = 0; x < M; x++)
+	{
+		for (int v = 0; v < N; v++)
+		{
+			double t = 2.0*PI*(double)(v) / (double)(N);
+			for (int y = 0; y < N; y++) {
+				double temp_var = t*(double)(y);
+				double temp_sin = sin(temp_var);
+				double temp_cos = cos(temp_var);
+
+				temp_matrix[x][v].real += input_matrix[x][y].real * temp_cos - input_matrix[x][y].img * temp_sin;
+				temp_matrix[x][v].img  += input_matrix[x][y].img  *temp_cos + input_matrix[x][y].real * temp_sin;
+
+			}
+		}
+	}
+	//cout << "_________mid__________";
+	//show_matrix(temp_matrix)
+	for (int u = 0; u < M; u++)
+	{
+		for (int v = 0; v < N; v++)
+		{
+			double t=2.0*PI*(double)(u) / (double)(M);
+			for (int x = 0; x < M; x++)
+			{
+				double temp_var = t*(double)(x);
+				output_matrix[u][v] += temp_matrix[x][v].real * cos(temp_var) - temp_matrix[x][v].img * sin(temp_var);
+				/*std::cout << "..." << output_matrix[u][v] << endl;*/
+			}
+			output_matrix[u][v] *= temp_sqrt;
+		}
+	}
+	show_matrix(output_matrix);
+}
+
+
+template <typename T>
+void  init_matrix(T inputarray[][2], int height, int width, f_1A_matrix<T>&vec)
+{
+	for (int i = 0; i < height; i++)
+	{
+		vector<T> temp;
+		for (int j = 0; j < width; j++)
+		{
+			temp.push_back(inputarray[i][j]);
+		}
+		vec.push_back(temp);
+	}
+}
+
+template <typename T>
+void show_matrix(const f_1A_matrix<T>&vec)
+{
+	for (auto i : vec)
+	{
+		for (auto j : i)
+			cout << j << " ";
+		cout << "\n";
+	}
+}
