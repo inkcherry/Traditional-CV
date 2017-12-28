@@ -17,6 +17,9 @@ const double PI = 3.141592653589793238462;
 template <typename T>
 void  dft_2D(const vector<std::vector<T>>&input_matrix, vector<std::vector<complex<T>>>&output_matrix); //傅里叶变换
 
+template <typename T>
+void show_matrix(const vector<vector<complex<T>>>&outpu_matrix);   //展示傅里叶变换之后的矩阵
+
 //template <typename T>
 //void idft_2D(T **inpurarray, T ***outputarray, int size);//傅里叶逆变换
 
@@ -53,18 +56,21 @@ int main()
 	init_matrix(inarr, 3, 2, inputarr);
 	show_matrix(inputarr);
 	dft_2D(inputarr, outputarr);
-
+	show_matrix(outputarr);
 	cin.get();
 	return 0;
 }
 
+
 template <typename T>
 void dft_2D(const vector<std::vector<T>>&input_matrix, vector<std::vector<complex<T>>>&output_matrix)
 {
+
+	//运算以double形式运算，展示数据以原数据类型展示
 	int height = input_matrix.size();
 	int width = input_matrix.front().size();
-	//int width = 2;   //..test;
-	//init output_matrix
+
+
 	vector<std::vector<complex<T>>> temp_matrix;
 	for (int i = 0; i < height; i++)
 	{
@@ -90,7 +96,7 @@ void dft_2D(const vector<std::vector<T>>&input_matrix, vector<std::vector<comple
 
 			double  t = 2.0*PI*(double)(j) / (double)(N);
 			for (int o = 0; o < N;o++){
-				T m_var = t*(double)(j);
+				T m_var = t*(double)(o);
 				temp_matrix[i][j].real += input_matrix[i][j] * cos(m_var);
 				temp_matrix[i][j].img -= input_matrix[i][j] * sin(m_var);
 			}
@@ -99,8 +105,35 @@ void dft_2D(const vector<std::vector<T>>&input_matrix, vector<std::vector<comple
 	for(int i=0;i<M;i++)
 		for (int j = 0; j < N; j++)
 		{
-
+			double t = 2.0*PI*(double)(i) / (double)(M);
+			for (int p = 0; p < M; ++p)
+			{
+				T m_var = t*double(p);
+				output_matrix[i][j].img += temp_matrix[i][j].real*cos(m_var) - temp_matrix[i][j].img*sin(m_var);
+				output_matrix[i][j].real += temp_matrix[i][j].img*cos(m_var) - temp_matrix[i][j].img*sin(m_var);
+			}
 		}
+	return;
+}
+
+
+template <typename T>
+void show_matrix(const vector<vector<complex<T>>>&output_matrix)
+{
+	std::cout << "real part" << std::endl; //实
+	for (auto i : output_matrix)
+	{
+		for (auto j : i)
+			std::cout << j.real<<",";
+		cout << "\n";
+	}
+	std::cout << "\nimg part" << std::endl;
+	for (auto i : output_matrix)
+	{
+		for (auto j : i)
+			std::cout << j.img<<",";
+		cout << "\n";
+	}
 	return;
 }
 //template <typename T>
