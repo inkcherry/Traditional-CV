@@ -36,20 +36,20 @@ template <typename T>
 void show_matrix(const f_1A_matrix<T>&vec);
 
 template <typename T>
-void  init_matrix(T inputarray[][2], int height, int width, f_1A_matrix<T>&vec);
+void  init_matrix(T inputarray[][3], int height, int width, f_1A_matrix<T>&vec);  //暂定
 
 
-
-
+template <typename T>
+void rotate_matrix(f_1A_matrix<T>&input_matrix);               //一个错位调整
 
 // main
 int main()
 {
-	double inarr[3][2] = { { 1,2 },{ 2,4 },{ 3,5 } };
-	double outarr[2][3][2] = { 0 };
+	double inarr[5][3] = { {2,2,2}, { 1,2,3 },{ 4,5,6 },{ 7,8,9 }, {7,7,6} };
+	double outarr[5][3][2] = { 0 };
 	std::vector<std::vector<double> > inputarr;
 	vector<vector<complex<double>>> outputarr;
-	init_matrix(inarr, 3, 2, inputarr);
+	init_matrix(inarr, 5, 3, inputarr);
 	show_matrix(inputarr);
 	dft_2d(inputarr, outputarr);
 	show_matrix(outputarr);
@@ -216,12 +216,13 @@ void idft_2d(const f_2A_matrix<T>& input_matrix,f_1A_matrix<T>&output_matrix)
 			output_matrix[u][v] *= temp_sqrt;
 		}
 	}
+	rotate_matrix(output_matrix);   //关于一个错位的修复
 	show_matrix(output_matrix);
 }
 
 
 template <typename T>
-void  init_matrix(T inputarray[][2], int height, int width, f_1A_matrix<T>&vec)
+void  init_matrix(T inputarray[][3], int height, int width, f_1A_matrix<T>&vec)
 {
 	for (int i = 0; i < height; i++)
 	{
@@ -242,5 +243,21 @@ void show_matrix(const f_1A_matrix<T>&vec)
 		for (auto j : i)
 			cout << j << " ";
 		cout << "\n";
+	}
+}
+
+
+template <typename T>
+void rotate_matrix(f_1A_matrix<T>&input_matrix)
+{
+	const int M = input_matrix.size();
+	const int N = input_matrix.front().size();
+	vector<T> temp;
+
+	for (int i = 1; i < floor(M/2); i++)   //不太清楚第一行为什么不错位
+	{
+			temp = input_matrix[i];
+			input_matrix[i] = input_matrix[M-i];
+			input_matrix[M - i] = temp;
 	}
 }
