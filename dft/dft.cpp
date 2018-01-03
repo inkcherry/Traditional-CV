@@ -45,7 +45,7 @@ void rotate_matrix(f_1A_matrix<T>&input_matrix);               //一个错位调整
 // main
 int main()
 {
-	double inarr[5][3] = { {2,2,2}, { 1,2,3 },{ 4,5,6 },{ 7,8,9 }, {7,7,6} };
+	double inarr[5][3] = { {2,2,2}, {3,3,3 },{ 2,2,2 },{ 4,4,4 }, {7,7,6} };
 	double outarr[5][3][2] = { 0 };
 	std::vector<std::vector<double> > inputarr;
 	vector<vector<complex<double>>> outputarr;
@@ -254,7 +254,7 @@ void rotate_matrix(f_1A_matrix<T>&input_matrix)
 	const int N = input_matrix.front().size();
 	vector<T> temp;
 
-	for (int i = 1; i < floor(M/2); i++)   //不太清楚第一行为什么不错位
+	for (int i = 1; i < ceil(M/2.0); i++)   //不太清楚第一行为什么不错位
 	{
 			temp = input_matrix[i];
 			input_matrix[i] = input_matrix[M-i];
