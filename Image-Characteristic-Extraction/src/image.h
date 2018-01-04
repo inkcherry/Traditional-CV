@@ -1,7 +1,7 @@
 #pragma once
 #include "D3DGraphics.h"
 #include <iostream>
-typedef std::pair<int, int> img_config;  //规定图像的长宽信息
+typedef std::pair<int, int> img_config;  //规定图像的长宽信息  
 
 class image
 {
@@ -21,11 +21,16 @@ public:
 	//....
 	//treat function
 
-	//
+
+
+
 	void Grayscale(int way);// 灰度化处理 way为方法
+	void  ConverTo_Fourier_atlas();  //转化为傅里叶图谱   此行为首先需要灰度化
+	//
 	void _draw_image(int xoff, int yoff, int width, int height, const D3DCOLOR *xsurf, DirectionState dec);
 	unsigned char to_matrix_max(D3DCOLOR &color);           //将d3dcolor转换为u char
 	unsigned char to_matrix_avg(D3DCOLOR &color);           
+
 
 private:
 	img_config main_config;

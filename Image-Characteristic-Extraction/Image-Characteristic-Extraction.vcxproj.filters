@@ -30,6 +30,12 @@
     <ClCompile Include="src\image.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\dfa.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mat.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\bitmap.h">
@@ -45,6 +51,12 @@
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="src\image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mat.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dfa.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
