@@ -153,7 +153,7 @@
   <ItemGroup>
     <ClCompile Include="src\bitmap.cpp" />
     <ClCompile Include="src\D3DGraphics.cpp" />
-    <ClCompile Include="src\dfa.cpp" />
+    <ClCompile Include="src\dft.cpp" />
     <ClCompile Include="src\image.cpp" />
     <ClCompile Include="src\Keyboard.cpp" />
     <ClCompile Include="src\Mat.cpp" />
@@ -162,7 +162,7 @@
   <ItemGroup>
     <ClInclude Include="src\bitmap.h" />
     <ClInclude Include="src\D3DGraphics.h" />
-    <ClInclude Include="src\dfa.h" />
+    <ClInclude Include="src\dft.h" />
     <ClInclude Include="src\image.h" />
     <ClInclude Include="src\Keyboard.h" />
     <ClInclude Include="src\Mat.h" />

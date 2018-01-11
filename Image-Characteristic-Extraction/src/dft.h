@@ -40,8 +40,10 @@ template <typename T>
 void show_matrix(const f_1A_matrix<T>&vec);
 
 template <typename T>
-void  init_matrix(T inputarray[][3], int height, int width, f_1A_matrix<T>&vec);  //暂定
+void  init_matrix(T inputarray[][3], int height, int width, f_1A_matrix<T>&vec);  //测试用
 
+template <typename T>
+void init_matrix(T **inputarray, int height, int width, f_1A_matrix<T>&vec);     //初始化二级指针
 
 template <typename T>
 void rotate_matrix(f_1A_matrix<T>&input_matrix);               //一个错位调整
@@ -250,6 +252,19 @@ void show_matrix(const f_1A_matrix<T>&vec)
 	}
 }
 
+
+template<typename T>
+void init_matrix(T inputarray**, int height, int widht, f_1A_matrix<T>&vec)
+{
+	for (int i = 0; i < height; i++)
+	{		vector<T>temp;
+	for (int j = 0; j < widht; j++)
+	{
+		temp.push_back(inputarray[i][j]);
+	}
+	vec.push_back(temp);
+    }
+}
 
 template <typename T>
 void rotate_matrix(f_1A_matrix<T>&input_matrix)
