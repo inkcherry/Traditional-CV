@@ -5,6 +5,7 @@
 class Mat   //需要先灰度化
 {
 public:
+	
 	explicit Mat(img_config &image, D3DCOLOR *surface);  //转换成矩阵
 	void show_main_mat();
 	~Mat();

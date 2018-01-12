@@ -1,7 +1,7 @@
 #include "image.h"
 
 
-const unsigned long  ANDD= 0x000000ff;
+
 
 image::image(D3DGraphics &d3d_, D3DCOLOR *image_surface_, const img_config &img_config_):
 	main_d3d(&d3d_),

@@ -1,6 +1,7 @@
 #pragma once
 #include "D3DGraphics.h"
 #include <iostream>
+const unsigned long  ANDD = 0x000000ff;
 typedef std::pair<int, int> img_config;  //规定图像的长宽信息  
 
 class image
@@ -28,7 +29,8 @@ public:
 	unsigned char to_matrix_avg(D3DCOLOR &color);           
 public: img_config get_img_config() { return main_config; }
 	D3DCOLOR *get_inital_surface() { return inital_image_surface; }
-
+	D3DCOLOR *get_final_surface() { return final_image_surface; }
+	
 private:
 	img_config main_config;
 	D3DGraphics *main_d3d;

@@ -254,7 +254,7 @@ void show_matrix(const f_1A_matrix<T>&vec)
 
 
 template<typename T>
-void init_matrix(T inputarray**, int height, int widht, f_1A_matrix<T>&vec)
+void init_matrix(T **inputarray, int height, int widht, f_1A_matrix<T>&vec)
 {
 	for (int i = 0; i < height; i++)
 	{		vector<T>temp;
