@@ -39,13 +39,25 @@ void Mat:: _conver_to_mat(D3DCOLOR *surface)
 	
 
 }
-void Mat::show_main_mat()
+void Mat::show_main_mat()    //调试 以messagebox形式打印矩阵 （应该还有更好的办法）
 {
-	for(int i=0;i<height;i++)
+	string show_mat = "";
+	for (int i = 0; i < height; i++)
+	{
 		for (int j = 0; j < width; j++)
 		{
-			std::cout << main_mat[i][j] << std::endl;
+			show_mat += std::to_string(main_mat[i][j]) + " ";
 		}
+		show_mat += "\n";
+
+	}
+	int msgboxID = MessageBox(
+		NULL,
+		
+		(LPCSTR)show_mat.c_str(),
+		(LPCSTR)L"Account Details",
+		MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+	);
 }
 Mat::~Mat()
 {
@@ -55,6 +67,7 @@ void Mat::dft()
 {
 	f_1A_matrix<unsigned char> inputarray;
 	f_2A_matrix<unsigned char> outputarray;
+	f_1A_matrix<unsigned char> inversearray; //逆变换回后
 	init_matrix(main_mat, this->height, this->width, inputarray);  //初始化矩阵
 
 	for (int i = 0; i < height; i++)
@@ -64,7 +77,51 @@ void Mat::dft()
 			if (k > 0)
 				std::cout <<k;   //test
 		}
+	typedef f_1A_matrix<unsigned char> M1;
+	typedef f_2A_matrix<unsigned char> M2;
+
+
+
+	std::function<void(M1)> show_m1 = [&](M1 mat_) {
+		string show_mat = "";
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				show_mat += std::to_string(mat_[i][j]) + " ";
+			}
+			show_mat += "\n";
+
+		}
+		int msgboxID = MessageBox(
+			NULL,
+
+			(LPCSTR)show_mat.c_str(),
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+	
+	};
+
+	//std::function<void (M2) > show_m2 = [&](M2 show_mat_) {};
+
+	//测试 show array before dft
+	show_m1(inputarray);
+	//
+	
 	dft_2d(inputarray, outputarray);         //转换后ouypuy矩阵为 要处理的矩阵
+	idft_2d(outputarray, inversearray);
+	show_m1(inversearray);
+
+	//测试 show array after dft
+	//
+
+	
+	//测试 show array after idft
+
+	//
+
+
 
 
 }

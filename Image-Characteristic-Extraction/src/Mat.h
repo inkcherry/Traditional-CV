@@ -2,6 +2,10 @@
 #include "image.h"
 #include "dft.h"
 #include "D3DGraphics.h"
+#include <cstring>
+#include <string>
+#include <iostream>
+#include <functional>
 class Mat   //需要先灰度化
 {
 public:
