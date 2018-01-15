@@ -266,6 +266,22 @@ void init_matrix(T **inputarray, int height, int widht, f_1A_matrix<T>&vec)
     }
 }
 
+template<typename T>
+void init_matrix(T **inputarray, int height, int widht, f_1A_matrix<double>&vec)
+{
+	for (int i = 0; i < height; i++)
+	{
+		vector<double>temp;
+		for (int j = 0; j < widht; j++)
+		{
+			temp.push_back(inputarray[i][j]);
+		}
+		vec.push_back(temp);
+	}
+}
+
+
+
 template <typename T>
 void rotate_matrix(f_1A_matrix<T>&input_matrix)
 {

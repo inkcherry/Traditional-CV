@@ -65,9 +65,9 @@ Mat::~Mat()
 }
 void Mat::dft()
 {
-	f_1A_matrix<unsigned char> inputarray;
-	f_2A_matrix<unsigned char> outputarray;
-	f_1A_matrix<unsigned char> inversearray; //逆变换回后
+	f_1A_matrix<double> inputarray;
+	f_2A_matrix<double> outputarray;
+	f_1A_matrix<double> inversearray; //逆变换回后
 	init_matrix(main_mat, this->height, this->width, inputarray);  //初始化矩阵
 
 	for (int i = 0; i < height; i++)
@@ -77,8 +77,8 @@ void Mat::dft()
 			if (k > 0)
 				std::cout <<k;   //test
 		}
-	typedef f_1A_matrix<unsigned char> M1;
-	typedef f_2A_matrix<unsigned char> M2;
+	typedef f_1A_matrix<double> M1;
+	typedef f_2A_matrix<double> M2;
 
 
 
@@ -103,6 +103,36 @@ void Mat::dft()
 	
 	};
 
+	std::function<void(M2)> show_m2 = [&](M2 mat_) {
+		string show_mat_real = "";
+		string show_mat_img = "";
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				show_mat_real += std::to_string(mat_[i][j].real) + " ";
+				show_mat_img += std::to_string(mat_[i][j].img) + " ";
+			}
+			show_mat_real += "\n";
+			show_mat_img += "\n";
+		}
+		int msgboxID2 = MessageBox(					//实部
+			NULL,
+
+			(LPCSTR)show_mat_real.c_str(),
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+		int msgboxID3 = MessageBox(					//虚部
+			NULL,
+
+			(LPCSTR)show_mat_img.c_str(),
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+
+	};
+
 	//std::function<void (M2) > show_m2 = [&](M2 show_mat_) {};
 
 	//测试 show array before dft
@@ -110,6 +140,7 @@ void Mat::dft()
 	//
 	
 	dft_2d(inputarray, outputarray);         //转换后ouypuy矩阵为 要处理的矩阵
+	show_m2(outputarray);
 	idft_2d(outputarray, inversearray);
 	show_m1(inversearray);
 
