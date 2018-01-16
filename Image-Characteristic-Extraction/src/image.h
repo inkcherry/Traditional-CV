@@ -1,6 +1,8 @@
 #pragma once
 #include "D3DGraphics.h"
+#include "Mat.h"
 #include <iostream>
+class Mat;
 const unsigned long  ANDD = 0x000000ff;
 typedef std::pair<int, int> img_config;  //规定图像的长宽信息  
 
@@ -18,11 +20,12 @@ public:
 	~image();
 	void show_initial_image();  //处理前的图像
 	void show_final_image();	//处理后的图像
+	void show_fourier_image();
 	
 	//....
 	//treat function
 	void Grayscale(int way);// 灰度化处理 way为方法
-	void  ConverTo_Fourier_atlas();  //转化为傅里叶图谱   此行为首先需要灰度化
+	void  ConverTo_Fourier_atlas(Mat &mat);  //转化为傅里叶图谱   此行为首先需要灰度化
 	//
 	void _draw_image(int xoff, int yoff, int width, int height, const D3DCOLOR *xsurf, DirectionState dec);
 	unsigned char to_matrix_max(D3DCOLOR &color);           //将d3dcolor转换为u char
@@ -36,5 +39,6 @@ private:
 	D3DGraphics *main_d3d;
 	D3DCOLOR *inital_image_surface;
 	D3DCOLOR final_image_surface[30000];
+	D3DCOLOR *fourier_surface;
 };
 

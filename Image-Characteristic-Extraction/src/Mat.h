@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <functional>
+typedef std::pair<int, int> img_config;  //规定图像的长宽信息  
 class Mat   //需要先灰度化
 {
 public:
@@ -13,7 +14,8 @@ public:
 	explicit Mat(img_config &image, D3DCOLOR *surface);  //转换成矩阵
 	void show_main_mat();
 	~Mat();
-	void dft();//change
+	f_2A_matrix<double> dft();//change  
+	D3DCOLOR *get_fourier_surface();   //获取傅里叶图谱 
 private:
 	void _conver_to_mat(D3DCOLOR *surface);
 	int width;

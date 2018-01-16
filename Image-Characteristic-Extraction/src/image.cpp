@@ -3,10 +3,11 @@
 
 
 
-image::image(D3DGraphics &d3d_, D3DCOLOR *image_surface_, const img_config &img_config_):
+image::image(D3DGraphics &d3d_, D3DCOLOR *image_surface_, const img_config &img_config_) :
 	main_d3d(&d3d_),
 	inital_image_surface(image_surface_),
-	main_config(img_config_)
+	main_config(img_config_),
+	fourier_surface(nullptr)
 {
 	//final_image_surface = new D3DCOLOR(img_config_.first*img_config_.second + 1);
 }
@@ -49,6 +50,10 @@ void image::Grayscale(int way)
 	return; 
 	
 }
+void image::ConverTo_Fourier_atlas(Mat &mat)
+{
+	fourier_surface = mat.get_fourier_surface();
+}
 unsigned char image::to_matrix_max(D3DCOLOR &color)          //½«d3dcolor×ª»»Îªu char
 {
 	unsigned char max_ = 0;
@@ -72,6 +77,10 @@ unsigned char image::to_matrix_avg(D3DCOLOR &color)
 void image::show_final_image()
 {
 	_draw_image(100, 100, main_config.first, main_config.second, final_image_surface, UP);
+}
+void image::show_fourier_image() 
+{
+	_draw_image(300, 300, main_config.first, main_config.second,fourier_surface, UP);
 }
 void  image::_draw_image(int xoff, int yoff, int width, int height, const D3DCOLOR *xsurf, DirectionState dec)
 {
