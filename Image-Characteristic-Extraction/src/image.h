@@ -18,16 +18,16 @@ public:
 	};
 	image(D3DGraphics &d3d_,D3DCOLOR *image_surface,const img_config &img_onfig) ;   
 	~image();
-	void show_initial_image();  //处理前的图像
-	void show_final_image();	//处理后的图像
-	void show_fourier_image();
+	void show_initial_image()const;  //处理前的图像
+	void show_final_image()const;	//处理后的图像
+	void show_fourier_image()const;
 	
 	//....
 	//treat function
 	void Grayscale(int way);// 灰度化处理 way为方法
 	void  ConverTo_Fourier_atlas(Mat &mat);  //转化为傅里叶图谱   此行为首先需要灰度化
 	//
-	void _draw_image(int xoff, int yoff, int width, int height, const D3DCOLOR *xsurf, DirectionState dec);
+	void _draw_image(int xoff, int yoff, int width, int height, const D3DCOLOR *xsurf, DirectionState dec)const;
 	unsigned char to_matrix_max(D3DCOLOR &color);           //将d3dcolor转换为u char
 	unsigned char to_matrix_avg(D3DCOLOR &color);           
 public: img_config get_img_config() { return main_config; }

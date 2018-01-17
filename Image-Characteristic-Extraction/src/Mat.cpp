@@ -176,14 +176,14 @@ D3DCOLOR * Mat::get_fourier_surface()
 	//		show_mat_real += "\n";
 	//		show_mat_img += "\n";
 	//	}
-	//	int msgboxID2 = MessageBox(					//实部
+	//	int msgboxIDM2R = MessageBox(					//实部
 	//		NULL,
 
 	//		(LPCSTR)show_mat_real.c_str(),
 	//		(LPCSTR)L"Account Details",
 	//		MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
 	//	);
-	//	int msgboxID3 = MessageBox(					//虚部
+	//	int msgboxIDM2I = MessageBox(					//虚部
 	//		NULL,
 
 	//		(LPCSTR)show_mat_img.c_str(),
@@ -194,48 +194,99 @@ D3DCOLOR * Mat::get_fourier_surface()
 	//};
 
 
-	//typedef unsigned char** MA;
-	//std::function<void(MA)> show_mat = [&](MA mat_) {
-	//	string show_mat_real = "";
-	//	string show_mat_img = "";
-	//	for (int i = 0; i < height; i++)
-	//	{
-	//		for (int j = 0; j < width; j++)
-	//		{
-	//			show_mat_real += std::to_string(mat_[i][j]) + " ";
-	//		}
-	//		show_mat_real += "\n";
-	//	
-	//	}
-	//	int msgboxID2 = MessageBox(					//实部
-	//		NULL,
+	typedef unsigned char** MA;
+	std::function<void(MA)> show_mat = [&](MA mat_) {
+		string show_mat_real = "";
+	
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				show_mat_real += std::to_string(mat_[i][j]) + " ";
+			}
+			show_mat_real += "\n";
+		
+		}
+		LPCSTR ma_content = (LPCSTR)show_mat_real.c_str();
 
-	//		(LPCSTR)show_mat_real.c_str(),
-	//		(LPCSTR)L"Account Details",
-	//		MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
-	//	);
+		int msgboxIDMA = MessageBox(					//实部
+			NULL,
+			ma_content,
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
 
-	//};
+	};
 
 
-	D3DCOLOR *fourier_surface=new D3DCOLOR(height*width+1);
+	typedef  D3DCOLOR* MD;
+	std::function<void(MD )> show_d3d = [&](MD mat_) {
+		string show_mat_real = "";
+		string show_mat_img = "";
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				show_mat_real += std::to_string(mat_[i*width+j]&ANDD) + " ";
+			}
+			show_mat_real += "\n";
+		
+		}
+		int msgboxIDMD = MessageBox(					//实部
+			NULL,
+			(LPCSTR)show_mat_real.c_str(),
+			(LPCSTR)L"Bccount Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+
+	};
+
+	D3DCOLOR *fourier_surface=new D3DCOLOR(height*width+2);
 	/*return nullptr;*/
 	f_2A_matrix<double> mat = this->dft();  //效率有点低
 
-	/*show_m2(mat);*/
-	//unsigned char **temp=new unsigned char* [height];
+	//show_m2(mat);
+
+	unsigned char **temp=new unsigned char* [height];//test
+
+
 	unsigned char temppixel;
 	for (int i = 0; i < this->height; i++)
 	{
-		//temp[i] = new unsigned char[width];
+		temp[i] = new unsigned char[width];  //test
+
 		for (int j = 0; j< this->width; j++)
 		{
-			//temp[i][j] = abs(mat[i][j].img);  //频域 虚数部分 正数  ，暂时没取对数
-			temppixel = abs(mat[i][j].img);
-			fourier_surface[i*width+j]= D3DCOLOR_XRGB(temppixel, temppixel, temppixel);
+			//temp[i][j] = abs(mat[i][j].img);  //test 频域 虚数部分 正数  ，暂时没取对数
+
+
+
+
+			if (mat[i][j].img != 0)
+			{
+				temp[i][j] = (unsigned char)abs(log10(mat[i][j].img));
+			}  //test 频域 虚数部分 正数  ，暂时没取对数
+			else { temp[i][j] = 254; }
+
+
+			//temppixel = (unsigned char)(abs(mat[i][j].img));  //未使用对数方法
+			//temppixel = (unsigned char)(abs(log10(mat[i][j].img)));
+			if (mat[i][j].img != 0)
+			{
+				temppixel= (unsigned char)abs(log10(mat[i][j].img));
+			}  //test 频域 虚数部分 正数  ，暂时没取对数
+			else { temppixel = 254; }
+
+			//fourier_surface[i*width + j] = D3DCOLOR_ARGB(temppixel,temppixel, temppixel, temppixel); //
+			fourier_surface[i*width+j-1] = D3DCOLOR_XRGB( temppixel, temppixel, temppixel);
 		}
 		
+		
 	}
-	//show_mat(temp);
+	show_mat(temp);//test
+
+
+	show_d3d(fourier_surface);
+
 	return fourier_surface;
 }

@@ -16,7 +16,7 @@ image::~image()
 {
 }
 
-void  image::show_initial_image()
+void  image::show_initial_image()const
 {
 	_draw_image(100, 100, main_config.first, main_config.second, inital_image_surface, UP);
 }
@@ -74,15 +74,15 @@ unsigned char image::to_matrix_avg(D3DCOLOR &color)
 	}
 	return sum/3;
 }
-void image::show_final_image()
+void image::show_final_image()const
 {
 	_draw_image(100, 100, main_config.first, main_config.second, final_image_surface, UP);
 }
-void image::show_fourier_image() 
+void image::show_fourier_image() const
 {
 	_draw_image(300, 300, main_config.first, main_config.second,fourier_surface, UP);
 }
-void  image::_draw_image(int xoff, int yoff, int width, int height, const D3DCOLOR *xsurf, DirectionState dec)
+void  image::_draw_image(int xoff, int yoff, int width, int height, const D3DCOLOR *xsurf, DirectionState dec)const
 {
 	int AllPixel = (width)*(height);
 	if (dec == UP)
