@@ -241,7 +241,7 @@ D3DCOLOR * Mat::get_fourier_surface()
 
 	};
 
-	D3DCOLOR *fourier_surface=new D3DCOLOR(height*width+2);
+	D3DCOLOR *fourier_surface=new D3DCOLOR[height*width+1];
 	/*return nullptr;*/
 	f_2A_matrix<double> mat = this->dft();  //效率有点低
 
@@ -251,11 +251,11 @@ D3DCOLOR * Mat::get_fourier_surface()
 
 
 	unsigned char temppixel;
-	for (int i = 0; i < this->height; i++)
+	for (int i = 0; i < (this->height); i++)
 	{
 		temp[i] = new unsigned char[width];  //test
 
-		for (int j = 0; j< this->width; j++)
+		for (int j = 0; j< (this->width); j++)
 		{
 			//temp[i][j] = abs(mat[i][j].img);  //test 频域 虚数部分 正数  ，暂时没取对数
 
@@ -271,14 +271,14 @@ D3DCOLOR * Mat::get_fourier_surface()
 
 			//temppixel = (unsigned char)(abs(mat[i][j].img));  //未使用对数方法
 			//temppixel = (unsigned char)(abs(log10(mat[i][j].img)));
-			if (mat[i][j].img != 0)
-			{
-				temppixel= (unsigned char)abs(log10(mat[i][j].img));
-			}  //test 频域 虚数部分 正数  ，暂时没取对数
-			else { temppixel = 254; }
+		
+				temppixel= (unsigned char)abs(log10(mat[i][j].img)*20);
+			 //test 频域 虚数部分 正数  ，暂时没取对数
+			
 
 			//fourier_surface[i*width + j] = D3DCOLOR_ARGB(temppixel,temppixel, temppixel, temppixel); //
-			fourier_surface[i*width+j-1] = D3DCOLOR_XRGB( temppixel, temppixel, temppixel);
+		
+			fourier_surface[i*width + j] = D3DCOLOR_XRGB(temppixel, temppixel, temppixel);
 		}
 		
 		
