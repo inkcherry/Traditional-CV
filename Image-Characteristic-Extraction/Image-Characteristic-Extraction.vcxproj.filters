@@ -36,6 +36,9 @@
     <ClCompile Include="src\dft.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\filter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\bitmap.h">
@@ -57,6 +60,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\dft.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\filter.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

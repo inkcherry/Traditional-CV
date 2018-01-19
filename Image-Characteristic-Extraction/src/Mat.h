@@ -16,6 +16,7 @@ public:
 	~Mat();
 	f_2A_matrix<double> dft();//change  
 	D3DCOLOR *get_fourier_surface();   //ªÒ»°∏µ¿Ô“∂Õº∆◊ 
+	img_config get_img_config() { return std::make_pair(width, height); }
 private:
 	void _conver_to_mat(D3DCOLOR *surface);
 	int width;
