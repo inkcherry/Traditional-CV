@@ -7,6 +7,8 @@
 #include "Keyboard.h"
 #include "D3DGraphics.h"
 #include "Mat.h"
+#include "unit_test.cpp"
+#include "filter.h"
 static KeyboardServer kServ;
 
 LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
@@ -108,9 +110,9 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 	img.Grayscale(1);  //1为max法 2为均值法 3为加权均值
    
-	Mat m(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
-
-	img.ConverTo_Fourier_atlas(m);
+	Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
+	filter fi(mkk);
+	//img.ConverTo_Fourier_atlas(m);
 	
 	//m.dft();
 	/*m.get_fourier_surface();*/
@@ -138,7 +140,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 			d3d.BeginFrame();
 			img.show_final_image();
-			img.show_fourier_image();
+			//img.show_fourier_image();
 			d3d.EndFrame();
 
 

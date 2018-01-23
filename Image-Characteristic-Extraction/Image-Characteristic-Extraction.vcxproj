@@ -158,6 +158,7 @@
     <ClCompile Include="src\image.cpp" />
     <ClCompile Include="src\Keyboard.cpp" />
     <ClCompile Include="src\Mat.cpp" />
+    <ClCompile Include="src\unit_test.cpp" />
     <ClCompile Include="src\Windows.cpp" />
   </ItemGroup>
   <ItemGroup>

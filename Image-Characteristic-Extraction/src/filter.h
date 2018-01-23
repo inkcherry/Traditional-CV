@@ -2,7 +2,6 @@
 #include "Mat.h"
 typedef std::pair<int, int> img_config;  //规定图像的长宽信息  
 
-
 struct kernel //内核函数不提供计算功能  内核函数
 {	
 	img_config main_config;
@@ -30,13 +29,14 @@ struct kernel //内核函数不提供计算功能  内核函数
 	double **kernel_mat;
 };
 
+
+class filter;
 class filterfactory   //工厂类 。。   有些核是特殊定义的  这个暂时未实现
 {
 public:
 	enum kerneltype {aa,bb,cc,dd};
-	filterfactory(Mat &main_mat_r, kerneltype &type) {};
-
-	filter *filter_product;
+	filterfactory(Mat &main_mat_r, kerneltype &type) {}
+	filter* filter_product;
 private:
 	filter* get_filter_product() { return filter_product; }
 };
@@ -45,9 +45,8 @@ private:
 
 class filter   //滤波类 提供一般的滤波接口   会通过滤波修改Mat的值
 {
-
 public:
-	filter(Mat &main_mat_r);
+	explicit filter(Mat &main_mat_r) {};
 	~filter();
 	void  convolution();  //卷积
 

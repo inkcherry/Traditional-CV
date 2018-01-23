@@ -39,6 +39,9 @@
     <ClCompile Include="src\filter.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\unit_test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\bitmap.h">
