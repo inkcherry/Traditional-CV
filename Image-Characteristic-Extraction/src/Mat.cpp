@@ -20,10 +20,10 @@ void Mat:: _conver_to_mat(D3DCOLOR *surface)
 	//}
 
 
-	main_mat= new unsigned char*[height];  // 定义一个 用于处理的矩阵
+	main_mat= new double*[height];  // 定义一个 用于处理的矩阵
 	for (int i = 0; i < height; i++)   //将D3D换成mat矩阵 
 	{
-		main_mat[i] = new unsigned char[width];
+		main_mat[i] = new double[width];
 		for (int j = 0; j < width; j++)
 		{
 			//zhelijiang d3dcolor fanyichengzhongwen
