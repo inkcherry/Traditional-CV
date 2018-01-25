@@ -27,6 +27,9 @@ struct kernel //内核函数不提供计算功能  内核函数
 		}
 	}
 	double **kernel_mat;
+	double * operator[](int &index) { return kernel_mat[index]; }
+	double * operator[](int &&index) { return kernel_mat[move(index)]; }
+
 };
 
 
@@ -48,7 +51,7 @@ class filter   //滤波类 提供一般的滤波接口   会通过滤波修改Mat的值
 public:
 	explicit filter(Mat &main_mat_r) {};
 	~filter();
-	void  convolution();  //卷积
+	double**  convolution();  //卷积
 
 	/*线性滤波函数 */
 	void boxblur();//方框滤波

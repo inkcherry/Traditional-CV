@@ -6,6 +6,11 @@ Mat::Mat( img_config &image,  D3DCOLOR *surface): width(image.first), height(ima
 	_conver_to_mat(surface);
 }
 
+Mat::Mat(double ** arr, int width_, int height_):width(width_),height(height_)
+{
+	main_mat = arr;   //·Çcopy 
+}
+
 
 void Mat:: _conver_to_mat(D3DCOLOR *surface)
 {

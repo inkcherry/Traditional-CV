@@ -68,5 +68,8 @@
     <ClInclude Include="src\filter.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\unit_test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

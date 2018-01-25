@@ -7,7 +7,7 @@
 #include "Keyboard.h"
 #include "D3DGraphics.h"
 #include "Mat.h"
-#include "unit_test.cpp"
+#include "unit_test.h"
 #include "filter.h"
 static KeyboardServer kServ;
 
@@ -112,6 +112,10 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
    
 	Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
 	filter fi(mkk);
+	
+	double** test_mat = test::get_mat();
+	test::show_mat(test_mat, 3, 3);
+
 	//img.ConverTo_Fourier_atlas(m);
 	
 	//m.dft();

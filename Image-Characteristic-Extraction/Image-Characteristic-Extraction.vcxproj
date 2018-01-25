@@ -170,6 +170,7 @@
     <ClInclude Include="src\Keyboard.h" />
     <ClInclude Include="src\Mat.h" />
     <ClInclude Include="src\Resource.h" />
+    <ClInclude Include="src\unit_test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
