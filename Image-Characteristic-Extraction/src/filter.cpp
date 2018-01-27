@@ -1,10 +1,10 @@
 #include "filter.h"
-//filter::filter(Mat & main_mat_r):main_mat(&main_mat_r),
-//width(main_mat_r.get_img_config().first),
-//height(main_mat_r.get_img_config().second),
-//kernel_mat(kernel())  //默认构造
-//{
-//}
+filter::filter(Mat & main_mat_r):main_mat(&main_mat_r),
+width(main_mat_r.get_img_config().first),
+height(main_mat_r.get_img_config().second),
+kernel_mat(kernel())  //默认构造
+{
+}
 
 
 filter::~filter()
@@ -16,10 +16,13 @@ double** filter::convolution()  //mat卷积操作   main_mat与kernel_mat进行卷积操作
 {
 
 	//卷积 g=f*h  返回一个新的矩阵
-	double **res_mat=new double *[height];  //结果矩阵 形势与原矩阵相同
-	for (int i = 0; i < height; i++)
-		res_mat[i] = new double[width];
+	int res_height = height + kernel_mat.main_config.second ;
+	int res_width = width + kernel_mat.main_config.first ;
 
+	double **res_mat=new double *[res_height];  //结果矩阵 形势与原矩阵相同
+	for (int i = 0; i <=res_height; i++)
+		res_mat[i] = new double[res_width];
+		
 
 
 	int h_main_mat = height;

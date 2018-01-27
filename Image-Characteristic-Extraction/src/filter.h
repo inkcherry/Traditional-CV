@@ -7,7 +7,7 @@ struct kernel //内核函数不提供计算功能  内核函数
 	img_config main_config;
 	kernel() :kernel_mat(new double *[3]),main_config(make_pair(3, 3))   //默认矩阵3*3 1，2，1     0 0 0  -1 -2 -3
 	{
-		int default_arr[9] = { 1,2,1,0,0,0,-1,-2,-3 };
+		int default_arr[9] = { 1,2,1,0,0,0,-1,-2,-1 };
 		for (int i = 0; i < 3; i++)
 		{
 			kernel_mat[i] = new double[3];
@@ -49,7 +49,7 @@ private:
 class filter   //滤波类 提供一般的滤波接口   会通过滤波修改Mat的值
 {
 public:
-	explicit filter(Mat &main_mat_r) {};
+	explicit filter(Mat &main_mat_r) ;
 	~filter();
 	double**  convolution();  //卷积
 

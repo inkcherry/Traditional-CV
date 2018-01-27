@@ -110,12 +110,15 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 	img.Grayscale(1);  //1为max法 2为均值法 3为加权均值
    
-	Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
-	filter fi(mkk);
+	//Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
+	//filter fi(mkk);
 	
 	double** test_mat = test::get_mat();
-	test::show_mat(test_mat, 3, 3);
+	//test::show_mat(test_mat, 3, 3);
+	Mat t_mat(test_mat, 3, 3);
+	filter t_fil(t_mat);
 
+	test::show_mat(t_fil.convolution(),4,4);
 	//img.ConverTo_Fourier_atlas(m);
 	
 	//m.dft();
