@@ -1,7 +1,8 @@
 #include "unit_test.h"
+#include "Mat.h"
+#include "filter.h"
 
 using namespace std;
-
 	double** test::get_mat() {
 		int arr[9] = { 1,2,3,4,5,6,7,8,9 };
 		double ** mat=new double*[3];
@@ -37,3 +38,16 @@ using namespace std;
 		);
 	}
 
+	void unit::test_init_kernel() {
+		double** test_mat = test::get_mat();
+		//test::show_mat(test_mat, 3, 3);
+		Mat *t_mat = new Mat(test_mat, 3, 3);
+		filter t_fil(t_mat);
+		t_fil.boxblur(3, 3);
+
+		kernel *ke = t_fil.get_kernel();
+		test::show_mat(ke->kernel_mat, ke->main_config.first, ke->main_config.second);
+		t_fil.blur(3, 3);
+		ke = t_fil.get_kernel();
+		test::show_mat(ke->kernel_mat, ke->main_config.first, ke->main_config.second);
+	}

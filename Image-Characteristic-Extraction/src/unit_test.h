@@ -7,3 +7,7 @@ namespace test {
 	double** get_mat();
 	void show_mat(double **mat_, const int &width, const int &height);
 }
+
+namespace unit {
+	void test_init_kernel();
+}

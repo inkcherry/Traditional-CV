@@ -110,17 +110,13 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 	img.Grayscale(1);  //1为max法 2为均值法 3为加权均值
    
+	unit::test_init_kernel();
 	//Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
 	//filter fi(mkk);
 	
-	double** test_mat = test::get_mat();
-	//test::show_mat(test_mat, 3, 3);
-	Mat *t_mat=new Mat(test_mat, 3, 3);
-	filter t_fil(t_mat);
-	t_fil.boxblur(3, 3);
 
-	kernel *ke = t_fil.get_kernel();
-	test::show_mat(ke->kernel_mat, ke->main_config.first, ke->main_config.second);
+
+	
 	/*test::show_mat(t_fil.convolution(),4,4);*/
 	
 	

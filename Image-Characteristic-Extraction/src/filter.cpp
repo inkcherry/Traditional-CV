@@ -63,6 +63,11 @@ void filter::boxblur(const int & kernel_width, const int & kernel_height)
 	kernel_factory pro(main_mat,kernel_width, kernel_height, kernel_factory::box);
 	kernel_mat = pro.get_factory_kernel();
 }
+void filter::blur(const int & kernel_width, const int & kernel_height)
+{
+	kernel_factory pro(main_mat, kernel_width, kernel_height, kernel_factory::blur);
+	kernel_mat = pro.get_factory_kernel();
+}
 //吸取dft写的很不友好的经验，全用double好了。
 
 kernel_factory::kernel_factory(Mat* &main_mat_r, const int &k_width,const int &k_height,kerneltype  type)
@@ -99,8 +104,19 @@ void kernel_factory::init_box_kernel(Mat* &main_mat_r, const int &k_width,const 
 
 void kernel_factory::init_gaussianblur_kernel(Mat* & main_mat_r, const int &k_width, const int &k_height)
 {
+
 }
 
-void kernel_factory::init_blur_kernel(Mat* & main_mat_r, const int &k_width, const int &k_height)
+void kernel_factory::init_blur_kernel(Mat* & main_mat_r, const int &k_width, const int &k_height)//中值滤波
 {
+	double **kernel_mat = new double*[k_height];
+	for (int i = 0; i < k_height; i++)
+	{
+		kernel_mat[i] = new double[k_width];
+		for (int j = 0; j < k_width; j++)
+		{
+			kernel_mat[i][j] = 1.0/((k_width)+(k_height));
+		}
+	}
+	factory_kernel = new kernel(kernel_mat, const_cast<int &>(k_width), const_cast<int &>(k_height));
 }
