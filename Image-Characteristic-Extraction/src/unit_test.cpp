@@ -51,3 +51,12 @@ using namespace std;
 		ke = t_fil.get_kernel();
 		test::show_mat(ke->kernel_mat, ke->main_config.first, ke->main_config.second);
 	}
+
+	void unit::test_conv() {
+		double **mat = test::get_mat();
+		Mat  *analog_matrix = new Mat(mat, 3, 3);
+		filter t_fi(analog_matrix);
+		t_fi.boxblur(3, 3);//大小为3，3的核 方框滤波
+		double **after_conv_mat = t_fi.convolution();
+		test::show_mat(after_conv_mat, 4, 4);
+	}

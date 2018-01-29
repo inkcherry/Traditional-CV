@@ -109,8 +109,8 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
     MSG msg;
 
 	img.Grayscale(1);  //1为max法 2为均值法 3为加权均值
-   
-	unit::test_init_kernel();
+	//unit::test_init_kernel();
+	unit::test_conv();
 	//Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
 	//filter fi(mkk);
 	
