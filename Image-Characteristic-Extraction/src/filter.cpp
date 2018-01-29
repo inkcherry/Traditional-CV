@@ -61,6 +61,7 @@ void filter::boxblur(const int & kernel_width, const int & kernel_height)
 {
 	
 	kernel_factory pro(main_mat,kernel_width, kernel_height, kernel_factory::box);
+	kernel_mat = pro.get_factory_kernel();
 }
 //吸取dft写的很不友好的经验，全用double好了。
 

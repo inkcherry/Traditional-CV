@@ -29,7 +29,7 @@ struct kernel //内核函数不提供计算功能  内核函数
 	}
 	//数组初始化
 	explicit kernel( double** &kernel_mat_, int &width, int &height) :kernel_mat(kernel_mat_), main_config(make_pair(width, height)) {};
-
+public:
 	double **kernel_mat;
 	double * operator[](int &index) { return kernel_mat[index]; }
 	double * operator[](int &&index) { return kernel_mat[move(index)]; }
@@ -43,12 +43,12 @@ class kernel_factory  //工厂类 。。   有些核是特殊定义的  这个暂时未实现
 public:
 	enum kerneltype {box,blur,gaussianblur};
 	kernel_factory(Mat* & main_mat_r,const int &k_width,const int &k_height, kerneltype  type);
+	kernel* get_factory_kernel() { return factory_kernel; }
 private:
 	kernel *factory_kernel;
 	void init_box_kernel(Mat* &main_mat_r, const int &k_width,const  int &k_height);
 	void init_gaussianblur_kernel(Mat* &main_mat_r,const int &k_width, const int &k_height);
 	void init_blur_kernel(Mat* &main_mat_r,const int &k_width,const int &k_height);
-	kernel* get_factory_kernel() { return factory_kernel; }
 };
 
 
