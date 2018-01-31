@@ -10,5 +10,5 @@ namespace test {
 
 namespace unit {
 	void test_init_kernel();
-	void test_conv();
+	double** test_conv();
 }

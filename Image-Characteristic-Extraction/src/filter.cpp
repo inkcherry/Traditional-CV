@@ -17,24 +17,49 @@ double** filter::convolution()  //mat卷积操作   main_mat与kernel_mat进行卷积操作
 {
 
 	//卷积 g=f*h  返回一个新的矩阵
+	/*初始化结果矩阵和辅助矩阵*/
 	int res_height = height + kernel_mat->main_config.second ;
 	int res_width = width + kernel_mat->main_config.first ;
 
-	double **res_mat=new double *[res_height];  //结果矩阵 形势与原矩阵相同
-	for (int i = 0; i <=res_height; i++)
-		res_mat[i] = new double[res_width];
-		
-
-
 	int h_main_mat = height;
 	int w_main_mat = width;
+
 	int h_kernel_mat = kernel_mat->main_config.first;
 	int w_kernel_mat = kernel_mat->main_config.second;
+
+	double **res_mat=new double *[res_height];  //结果矩阵 形势与原矩阵相同
+	double **r_res_mat = new double *[h_main_mat];
+
+
+	for (int i = 0; i <= res_height; i++)
+	{
+		res_mat[i] = new double[res_width];
+		for (int j = 0; j < res_width; j++)
+			res_mat[i][j] = 0;
+		//memset(res_mat[i], 0, sizeof(res_mat[i]));
+	}
+
+	for (int i = 0; i < h_main_mat; i++)
+		r_res_mat[i] = new double[w_main_mat];
+
+	std::function<void()> delete_res_mat = [&]() {
+		for (int i = 0; i < res_height; i++)
+		{
+			delete[]res_mat[i];
+			//res_mat[i] = nullptr;
+		}
+		delete[] res_mat;    //??????????
+
+	};
+
+	/**/
+	
+
 	//Mat *res_Mmat = new Mat(width, height);
 	
 		double temp;
 
-		for (int i = 0; i < h_main_mat + h_kernel_mat - 1; i++)
+		for (int i = 0; i < h_main_mat + h_kernel_mat - 1; i++)  
 		{
 			for (int j = 0; j < w_main_mat + w_kernel_mat - 1; j++)
 			{
@@ -51,11 +76,23 @@ double** filter::convolution()  //mat卷积操作   main_mat与kernel_mat进行卷积操作
 					}
 				}
 				res_mat[i][j] = temp;
-
 			}
 		}
-		return res_mat;
-		//
+		//return res_mat;//emmm这个运算矩阵 需要将他转换为真正矩阵  。。。。
+		//通过copy实现
+		for (int i = 1; i < h_main_mat + 1; i++)
+		{
+			for (int j = 1; j < w_main_mat + 1; j++)
+				r_res_mat[i - 1][j - 1] = res_mat[i][j];
+			
+		}
+
+
+		delete_res_mat(); //删除辅助运算的矩阵
+
+
+
+		return r_res_mat;
 }
 void filter::boxblur(const int & kernel_width, const int & kernel_height)
 {
