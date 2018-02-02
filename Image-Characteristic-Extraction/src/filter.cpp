@@ -48,7 +48,7 @@ double** filter::convolution()  //mat卷积操作   main_mat与kernel_mat进行卷积操作
 			delete[]res_mat[i];
 			//res_mat[i] = nullptr;
 		}
-		delete[] res_mat;    //??????????
+		//delete[] res_mat;    //??????????
 
 	};
 
