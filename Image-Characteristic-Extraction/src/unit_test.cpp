@@ -43,13 +43,15 @@ using namespace std;
 		//test::show_mat(test_mat, 3, 3);
 		Mat *t_mat = new Mat(test_mat, 3, 3);
 		filter t_fil(t_mat);
-		t_fil.boxblur(3, 3);
+
+
+		t_fil.GaussianBlur(3, 1);
 
 		kernel *ke = t_fil.get_kernel();
 		test::show_mat(ke->kernel_mat, ke->main_config.first, ke->main_config.second);
-		t_fil.blur(3, 3);
-		ke = t_fil.get_kernel();
-		test::show_mat(ke->kernel_mat, ke->main_config.first, ke->main_config.second);
+		/*	t_fil.blur(3, 3);
+			ke = t_fil.get_kernel();
+			test::show_mat(ke->kernel_mat, ke->main_config.first, ke->main_config.second);*/
 	}
 
 	double ** unit::test_conv() {
@@ -57,6 +59,7 @@ using namespace std;
 		Mat  *analog_matrix = new Mat(mat, 3, 3);
 		filter t_fi(analog_matrix);
 		t_fi.boxblur(3, 3);//大小为3，3的核 方框滤波
+		//t_fi.GaussianBlur(3, 3);
 		double **after_conv_mat = t_fi.convolution();
 		test::show_mat(after_conv_mat, 3, 3);
 		return after_conv_mat;

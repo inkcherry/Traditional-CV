@@ -105,9 +105,14 @@ void filter::blur(const int & kernel_width, const int & kernel_height)
 	kernel_factory pro(main_mat, kernel_width, kernel_height, kernel_factory::blur);
 	kernel_mat = pro.get_factory_kernel();
 }
+void filter::GaussianBlur(const int & kernel_size, const double & sigma)
+{
+	kernel_factory pro(main_mat, kernel_size, kernel_size, kernel_factory::gaussianblur, sigma);
+	kernel_mat = pro.get_factory_kernel();
+}
 //吸取dft写的很不友好的经验，全用double好了。
 
-kernel_factory::kernel_factory(Mat* &main_mat_r, const int &k_width,const int &k_height,kerneltype  type)
+kernel_factory::kernel_factory(Mat* &main_mat_r, const int &k_width,const int &k_height,kerneltype  type,const double& gaussian_sigma)
 {
 	switch (type)
 	{
@@ -118,7 +123,7 @@ kernel_factory::kernel_factory(Mat* &main_mat_r, const int &k_width,const int &k
 		init_blur_kernel(main_mat_r, k_width, k_height);
 		break;
 	case gaussianblur:
-		init_gaussianblur_kernel(main_mat_r, k_width, k_height);
+		init_gaussianblur_kernel(main_mat_r, k_width, gaussian_sigma);  //這裏有點不一樣
 		break;
 	default:
 		break;
@@ -139,9 +144,34 @@ void kernel_factory::init_box_kernel(Mat* &main_mat_r, const int &k_width,const 
 	factory_kernel = new kernel(kernel_mat, const_cast<int &>(k_width), const_cast<int &>( k_height));
 }
 
-void kernel_factory::init_gaussianblur_kernel(Mat* & main_mat_r, const int &k_width, const int &k_height)
+void kernel_factory::init_gaussianblur_kernel(Mat* &main_mat_r, const int &k_size, const double &sigma)
 {
+	const int center = k_size / 2;
+	double sum = 0;
+	double **gaussiankernel_mat = new double*[k_size];
+	for (int i = 0; i < k_size; i++)
+		gaussiankernel_mat[i] = new double[k_size];
 
+
+
+	for (int i = 0; i < k_size; i++)
+	{
+		for (int j = 0; j < k_size; j++)
+		{
+			gaussiankernel_mat[i][j] = exp(-((i - center)*(i - center) + (j - center)*(j - center)) / (2.0*sigma*sigma));
+			sum += gaussiankernel_mat[i][j];
+		}
+	}
+
+
+	for (int i = 0; i < k_size; i++)
+	{
+		for (int j = 0; j < k_size; j++)
+		{
+			gaussiankernel_mat[i][j] = gaussiankernel_mat[i][j] / sum;
+		}
+	}
+	factory_kernel = new kernel(gaussiankernel_mat, const_cast<int &>(k_size), const_cast<int &>(k_size));
 }
 
 void kernel_factory::init_blur_kernel(Mat* & main_mat_r, const int &k_width, const int &k_height)//中值滤波

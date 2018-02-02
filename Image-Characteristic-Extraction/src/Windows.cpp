@@ -109,8 +109,8 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
     MSG msg;
 
 	img.Grayscale(1);  //1为max法 2为均值法 3为加权均值
-	//unit::test_init_kernel();
-	double ** after=unit::test_conv();
+	unit::test_init_kernel();
+	/*double ** after=unit::test_conv();*/
 	/*Mat w(after, 3, 3);*/
 
 

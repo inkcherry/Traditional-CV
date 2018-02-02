@@ -42,12 +42,12 @@ class kernel_factory  //工厂类 。。   有些核是特殊定义的  这个暂时未实现
 {
 public:
 	enum kerneltype {box,blur,gaussianblur};
-	kernel_factory(Mat* & main_mat_r,const int &k_width,const int &k_height, kerneltype  type);
+	kernel_factory(Mat* & main_mat_r,const int &k_width,const int &k_height, kerneltype  typ, const double &gaussian_sigma=0);
 	kernel* get_factory_kernel() { return factory_kernel; }
 private:
 	kernel *factory_kernel;
 	void init_box_kernel(Mat* &main_mat_r, const int &k_width,const  int &k_height);
-	void init_gaussianblur_kernel(Mat* &main_mat_r,const int &k_width, const int &k_height);
+	void init_gaussianblur_kernel(Mat* &main_mat_r,const int &k_size, const double &sigama);
 	void init_blur_kernel(Mat* &main_mat_r,const int &k_width,const int &k_height);
 };
 
@@ -63,7 +63,7 @@ public:
 	/*线性滤波函数 */  //参数为核函数大小
 	void boxblur(const int &kernel_width,const int &kernel_height);//方框滤波
 	void blur(const int &kernel_width, const int &kernel_height);   //均值滤波
-	void GaussianBlur(const int &kernel_width, const int &kernel_height);//高斯滤波
+	void GaussianBlur(const int &kernel_size, const double &sigma);//高斯滤波
 	kernel*  get_kernel(){ return kernel_mat; }
 private:
 	kernel *kernel_mat ;
