@@ -64,6 +64,21 @@ public:
 	void boxblur(const int &kernel_width,const int &kernel_height);//方框滤波
 	void blur(const int &kernel_width, const int &kernel_height);   //均值滤波
 	void GaussianBlur(const int &kernel_size, const double &sigma);//高斯滤波
+
+	/*End*/
+
+
+
+
+
+	/*非线性滤波函数*/
+	/*非线性滤波无需卷积操作.滤波函数及返回结果矩阵*/
+	Mat*  medianblur();       //中值滤波（尖锐斑点 椒盐噪音去除）
+	Mat*  bliateralblur();   //双边滤波
+	/*End*/
+
+
+
 	kernel*  get_kernel(){ return kernel_mat; }
 private:
 	kernel *kernel_mat ;

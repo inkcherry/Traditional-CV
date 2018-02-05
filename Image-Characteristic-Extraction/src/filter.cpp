@@ -110,6 +110,64 @@ void filter::GaussianBlur(const int & kernel_size, const double & sigma)
 	kernel_factory pro(main_mat, kernel_size, kernel_size, kernel_factory::gaussianblur, sigma);
 	kernel_mat = pro.get_factory_kernel();
 }
+
+
+Mat* filter::medianblur()
+{
+	double **res_mat = new double *[height];
+	for (int i = 0; i < height; i++)
+		res_mat[i] = new double[width];
+
+
+	function<double(double arr[9])>find_median =   //找第中间值 
+		[](double arr[9])
+	{
+
+		return arr[1];
+	};
+	
+	
+	
+	
+	double near_arr[9] = {0};
+	
+	//边缘地带
+	const int bottom_index = height - 1;
+	const int right_index = width - 1;
+	for (int i = 0; i < width; i++)  //=  
+	{
+		res_mat[0][i] = *main_mat[0][i];
+		res_mat[bottom_index][i] = *main_mat[bottom_index][i];
+	}
+	
+
+	for (int j = width - 1; j < height; j++)// ||
+	{
+		res_mat[j][0] = *main_mat[j][0];
+		res_mat[j][right_index] = *main_mat[j][0];
+	}
+
+
+
+	//中心地带
+	for(int i=1;i<height-1;i++)
+		for (int j = 1; j < width-1; j++)
+		{
+			int top = i - 1, bottom = i + 1;
+			int left = j - 1, right = j + 1;
+			int near_arr_index = 0;
+			for(int k=top;k<=bottom;k++)
+				for (int l = left; l <= right; l++)
+				{
+					near_arr[near_arr_index++] = *main_mat[i][j];
+					res_mat[i][j] = find_median(near_arr);
+				}
+		}
+
+	Mat *res_mat_ = new Mat(res_mat, width, height);
+	return res_mat_;
+}
+
 //吸取dft写的很不友好的经验，全用double好了。
 
 kernel_factory::kernel_factory(Mat* &main_mat_r, const int &k_width,const int &k_height,kerneltype  type,const double& gaussian_sigma)
