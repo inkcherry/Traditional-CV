@@ -9,6 +9,7 @@ namespace test {
 }
 
 namespace unit {
+	void test_medianblur();
 	void test_init_kernel();
 	double** test_conv();
 }

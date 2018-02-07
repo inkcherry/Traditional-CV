@@ -4,7 +4,7 @@
 
 using namespace std;
 	double** test::get_mat() {
-		int arr[9] = { 1,2,3,4,5,6,7,8,9 };
+		int arr[9] = { 1,2,3,4,10,6,7,8,9 };
 		double ** mat=new double*[3];
 
 		for (int i = 0; i < 3; i++)
@@ -53,6 +53,22 @@ using namespace std;
 			ke = t_fil.get_kernel();
 			test::show_mat(ke->kernel_mat, ke->main_config.first, ke->main_config.second);*/
 	}
+
+
+	void unit::test_medianblur() {
+		double** test_mat = test::get_mat();
+		//test::show_mat(test_mat, 3, 3);
+		Mat *t_mat = new Mat(test_mat, 3, 3);
+		filter t_fil(t_mat);
+
+
+		Mat *res_mat = t_fil.medianblur();
+
+		res_mat->show_main_mat();
+		//kernel *ke = t_fil.get_kernel();
+
+	}
+
 
 	double ** unit::test_conv() {
 		double **mat = test::get_mat();

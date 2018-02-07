@@ -19,6 +19,7 @@ public:
 	D3DCOLOR *get_fourier_surface();   //»ñÈ¡¸µÀïÒ¶Í¼Æ× 
 	img_config get_img_config() { return std::make_pair(width, height); }
 	double * operator [](int &index) { return main_mat[index]; };
+	double * operator [](const int &index) { return main_mat[index]; };
 	double * operator [](int &&index) { return main_mat[move(index)]; };
 
 private:

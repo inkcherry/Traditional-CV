@@ -149,9 +149,10 @@ Mat* filter::medianblur()
       //考虑 1丢弃一侧数据的快排 ，2堆排，3建树  4维护单调数组
 	
 		int temp_index;
-		temp_index = get_find_index(arr, 0, 9);
+		temp_index = get_find_index(arr, low,high );
 		if (temp_index == 4)
-		{
+		{  
+	
 			return arr[temp_index];
 		}
 		else if (temp_index > 4)
@@ -175,15 +176,15 @@ Mat* filter::medianblur()
 	const int right_index = width - 1;
 	for (int i = 0; i < width; i++)  //=  
 	{
-		res_mat[0][i] = *main_mat[0][i];
-		res_mat[bottom_index][i] = *main_mat[bottom_index][i];
+		res_mat[0][i] =(*main_mat)[0][i];
+		res_mat[bottom_index][i] = (*main_mat)[bottom_index][i];
 	}
 	
 
-	for (int j = width - 1; j < height; j++)// ||
+	for (int j = 0; j < height; j++)// ||
 	{
-		res_mat[j][0] = *main_mat[j][0];
-		res_mat[j][right_index] = *main_mat[j][0];
+		res_mat[j][0] = (*main_mat)[j][0];
+		res_mat[j][right_index] = (*main_mat)[j][right_index];
 	}
 
 
@@ -198,12 +199,19 @@ Mat* filter::medianblur()
 			for(int k=top;k<=bottom;k++)
 				for (int l = left; l <= right; l++)
 				{
-					near_arr[near_arr_index++] = *main_mat[i][j];
-					res_mat[i][j] = find_median(near_arr,0,9);
+					near_arr[near_arr_index++] = (*main_mat)[k][l];
 				}
+			res_mat[i][j] = find_median(near_arr, 0, 8);
+
 		}
 
 	Mat *res_mat_ = new Mat(res_mat, width, height);
+
+
+
+	res_mat_->show_main_mat();
+
+
 	return res_mat_;
 }
 
