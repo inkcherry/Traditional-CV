@@ -114,22 +114,61 @@ void filter::GaussianBlur(const int & kernel_size, const double & sigma)
 
 Mat* filter::medianblur()
 {
+
+	double near_arr[9] = { 0 };
 	double **res_mat = new double *[height];
 	for (int i = 0; i < height; i++)
 		res_mat[i] = new double[width];
 
+	function<int(double arr[9],int low,int height)>get_find_index = 
+		[&](double arr[9], int low, int high) {
+		int temp = arr[low];
+		int pt = arr[low]; //
+		while (low != high)
+		{
+			while (low < high && arr[high] >= pt)
+				high--;
+			arr[low] = arr[high];
 
-	function<double(double arr[9])>find_median =   //找第中间值 
-		[](double arr[9])
+			while (low < high && arr[low] <= pt)
+				low++;
+			arr[high] = arr[low];
+		}
+		arr[low] = temp;
+		return low;
+	
+	};
+
+
+
+
+
+	function<int(double arr[9], int low, int height)> find_median =   //找第中间值 
+		[&get_find_index,&find_median](double arr[9], int low, int high)->double
 	{
-
-		return arr[1];
+      //考虑 1丢弃一侧数据的快排 ，2堆排，3建树  4维护单调数组
+	
+		int temp_index;
+		temp_index = get_find_index(arr, 0, 9);
+		if (temp_index == 4)
+		{
+			return arr[temp_index];
+		}
+		else if (temp_index > 4)
+		{
+			return find_median(arr, low, temp_index - 1);
+		}
+		else 
+		{
+			return find_median(arr, temp_index + 1, high);
+		}
+		return 0.0;
 	};
 	
 	
 	
 	
-	double near_arr[9] = {0};
+	
 	
 	//边缘地带
 	const int bottom_index = height - 1;
@@ -160,7 +199,7 @@ Mat* filter::medianblur()
 				for (int l = left; l <= right; l++)
 				{
 					near_arr[near_arr_index++] = *main_mat[i][j];
-					res_mat[i][j] = find_median(near_arr);
+					res_mat[i][j] = find_median(near_arr,0,9);
 				}
 		}
 
