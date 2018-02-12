@@ -4,7 +4,7 @@
 
 using namespace std;
 	double** test::get_mat() {
-		int arr[9] = {
+		double arr[9] = {
 			1,2,3,
 			4,10,6,
 			7,8,9
@@ -23,7 +23,7 @@ using namespace std;
 }
 
 	double** test::get_mat2() {
-		int arr[12] = { 
+		double arr[12] = { 
 			1.0,2.0,3.0,
 			4.5,4.5,4.5,
 			5.0,6.0,7.0,
@@ -97,7 +97,9 @@ using namespace std;
 
 	void unit::test_bliateralblur() {
 		double **mat = test::get_mat2();
-		Mat *inital_mat = new Mat(mat, 4, 3);
+		test::show_mat(mat, 3, 4);
+		Mat *inital_mat = new Mat(mat, 3, 4);
+		
 		filter t_fi(inital_mat);
 		Mat *res_mat = t_fi.bliateralblur(1, 1, 1);
 		res_mat->show_main_mat();

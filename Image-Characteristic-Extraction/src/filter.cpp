@@ -278,7 +278,7 @@ Mat * filter::bliateralblur(int r,int sigma_d,int sigma_r)   //滤波器边长   sigm
 	}
 
 	// bilateral filter  
-	for (i = 0; i < ny; i++)
+	for (i = 0; i < ny; i++)  //0 2 1 0
 		for (j = 0; j < nx; j++)
 		{
 			for (k = 0; k < channels; k++)
@@ -302,14 +302,29 @@ Mat * filter::bliateralblur(int r,int sigma_d,int sigma_r)   //滤波器边长   sigm
 						int pixcel_dif = (int)abs(inital_mat[y_tmp][x_tmp] - inital_mat[i][j]);
 						double weight_tmp = d_metrix[m + r][n + r] * r_metrix[pixcel_dif];  // 复合权重  
 
+						double kk = inital_mat[y_tmp][x_tmp];
+						double kkk = pixcel_sum;
+
+
+						if (i == 0 && j == 2 && m == 1 && n == 0) 
+						{
+							int a = 3;
+						}
 						pixcel_sum +=inital_mat[y_tmp][x_tmp] * weight_tmp;
+						
+
 						weight_sum += weight_tmp;
+
+
+						
 					}
 
 				pixcel_sum = pixcel_sum / weight_sum;
 				res_mat[i][j] = pixcel_sum;
 				////res_mat[i][j][c]   c表示未来粗处理多通道添加量 
 
+
+			
 			} // 一个通道  
 
 		}
