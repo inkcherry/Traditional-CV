@@ -74,7 +74,7 @@ public:
 	/*非线性滤波函数*/
 	/*非线性滤波无需卷积操作.滤波函数及返回结果矩阵*/
 	Mat*  medianblur();       //中值滤波（尖锐斑点 椒盐噪音去除）
-	Mat*  bliateralblur();   //双边滤波
+	Mat*  bliateralblur(int r, int sigma_d, int sigma_r);   //双边滤波
 	/*End*/
 
 

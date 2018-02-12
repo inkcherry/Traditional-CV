@@ -215,7 +215,116 @@ Mat* filter::medianblur()
 	return res_mat_;
 }
 
-//吸取dft写的很不友好的经验，全用double好了。
+Mat * filter::bliateralblur(int r,int sigma_d,int sigma_r)   //滤波器边长   sigma参数 d ,r
+{
+
+	//暂时处理目标为通道为1（灰度图像）
+	const  int channels = 1;
+	Mat &inital_mat=*main_mat;  
+
+	//初始化结果矩阵
+	double **res_mat = new double *[height];
+	for (int i = 0; i < height; i++)
+		res_mat[i] = new double[width];
+
+
+
+
+	int i, j, m, n, k;
+	int nx = width, ny = height;
+	int w_filter = 2 * r + 1; // 滤波器边长  
+
+	double gaussian_d_coeff = -0.5 / (sigma_d * sigma_d);
+	double gaussian_r_coeff = -0.5 / (sigma_r * sigma_r);
+
+	double** d_metrix = new double*[w_filter];  // spatial weight  
+
+
+
+	//如果考虑为Mat添加多通道  在此处处理
+	for (int i = 0; i < w_filter; i++)
+	{
+		d_metrix[i] = new double[w_filter];
+	}
+
+
+	double r_metrix[256];  // similarity weight  
+
+						   // copy the original image  
+	//double* img_tmp = new double[channels * nx * ny];
+
+
+	//for (i = 0; i < ny; i++)
+	//	for (j = 0; j < nx; j++)
+	//		for (k = 0; k < channels; k++)
+	//		{
+	//			img_tmp[i * channels * nx + channels * j + k] = initial_mat[i * channels * nx + channels* j + k];
+	//		}
+
+	// compute spatial weight  
+	for (i = -r; i <= r; i++)
+		for (j = -r; j <= r; j++)
+		{
+			int x = j + r;
+			int y = i + r;
+
+			d_metrix[y][x] = exp((i * i + j * j) * gaussian_d_coeff);
+		}
+
+	// compute similarity weight  
+	for (i = 0; i < 256; i++)
+	{
+		r_metrix[i] = exp(i * i * gaussian_r_coeff);
+	}
+
+	// bilateral filter  
+	for (i = 0; i < ny; i++)
+		for (j = 0; j < nx; j++)
+		{
+			for (k = 0; k < channels; k++)
+			{
+				double weight_sum, pixcel_sum;
+				weight_sum = pixcel_sum = 0.0;
+
+				for (m = -r; m <= r; m++)
+					for (n = -r; n <= r; n++)
+					{
+						if (m*m + n*n > r*r) continue;
+
+						int x_tmp = j + n;
+						int y_tmp = i + m;
+
+						x_tmp = x_tmp < 0 ? 0 : x_tmp;
+						x_tmp = x_tmp > nx - 1 ? nx - 1 : x_tmp;   // 边界处理，replicate  
+						y_tmp = y_tmp < 0 ? 0 : y_tmp;
+						y_tmp = y_tmp > ny - 1 ? ny - 1 : y_tmp;
+
+						int pixcel_dif = (int)abs(inital_mat[y_tmp][x_tmp] - inital_mat[i][j]);
+						double weight_tmp = d_metrix[m + r][n + r] * r_metrix[pixcel_dif];  // 复合权重  
+
+						pixcel_sum +=inital_mat[y_tmp][x_tmp] * weight_tmp;
+						weight_sum += weight_tmp;
+					}
+
+				pixcel_sum = pixcel_sum / weight_sum;
+				res_mat[i][j] = pixcel_sum;
+				////res_mat[i][j][c]   c表示未来粗处理多通道添加量 
+
+			} // 一个通道  
+
+		}
+
+
+	//delete[] img_tmp;
+
+
+	Mat *res_mat_ = new Mat(res_mat, width, height);
+	return res_mat_;
+
+	return nullptr;
+}
+
+//吸取dft写的很不友好的经验，全用double。。。
 
 kernel_factory::kernel_factory(Mat* &main_mat_r, const int &k_width,const int &k_height,kerneltype  type,const double& gaussian_sigma)
 {

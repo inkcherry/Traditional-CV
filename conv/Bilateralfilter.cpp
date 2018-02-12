@@ -1,4 +1,4 @@
-#include <cmath>
+#include <math.h>
 #include <iostream>
 const int channels = 1; //先试通道为1
 double *initial_mat=nullptr;  //

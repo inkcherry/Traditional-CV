@@ -4,7 +4,11 @@
 
 using namespace std;
 	double** test::get_mat() {
-		int arr[9] = { 1,2,3,4,10,6,7,8,9 };
+		int arr[9] = {
+			1,2,3,
+			4,10,6,
+			7,8,9
+		};
 		double ** mat=new double*[3];
 
 		for (int i = 0; i < 3; i++)
@@ -17,6 +21,27 @@ using namespace std;
 		}
 		return mat;
 }
+
+	double** test::get_mat2() {
+		int arr[12] = { 
+			1.0,2.0,3.0,
+			4.5,4.5,4.5,
+			5.0,6.0,7.0,
+			8.0,9.0 ,8.0
+		};
+		double ** mat = new double*[4];
+
+		for (int i = 0; i < 4; i++)
+		{
+			mat[i] = new double[3];
+			for (int j = 0; j < 3; j++)
+			{
+				mat[i][j] = arr[i * 3 + j];
+			}
+		}
+		return mat;
+	}
+
 
 	void test::show_mat(double **mat_, const int &width, const int &height) {
 		string show_mat = "";
@@ -70,6 +95,15 @@ using namespace std;
 	}
 
 
+	void unit::test_bliateralblur() {
+		double **mat = test::get_mat2();
+		Mat *inital_mat = new Mat(mat, 4, 3);
+		filter t_fi(inital_mat);
+		Mat *res_mat = t_fi.bliateralblur(1, 1, 1);
+		res_mat->show_main_mat();
+
+	}
+
 	double ** unit::test_conv() {
 		double **mat = test::get_mat();
 		Mat  *analog_matrix = new Mat(mat, 3, 3);
@@ -80,5 +114,7 @@ using namespace std;
 		test::show_mat(after_conv_mat, 3, 3);
 		return after_conv_mat;
 	}
+
+
 
 
