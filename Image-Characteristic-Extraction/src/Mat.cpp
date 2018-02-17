@@ -12,6 +12,22 @@ Mat::Mat(double ** arr, int width_, int height_):width(width_),height(height_)
 }
 
 
+ shared_ptr<D3DCOLOR> Mat::conver_to_d3dmat()
+{
+	
+	std::shared_ptr<D3DCOLOR>d3d_surface(new D3DCOLOR[height*width + 1], std::default_delete<D3DCOLOR[]>());
+	for(int i=0;i<height;i++)
+		for (int j = 0; j < width; j++)
+		{
+			unsigned char temppixel = main_mat[i][j];
+		    d3d_surface.get()[i*width+j] = D3DCOLOR_XRGB(temppixel, temppixel, temppixel);
+		}
+
+
+	return d3d_surface;
+	return nullptr;
+}
+
 void Mat:: _conver_to_mat(D3DCOLOR *surface)
 {
 	int n_piexls = width*height;   //定义全部像素

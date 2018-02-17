@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <functional>
+#include <memory>
 typedef std::pair<int, int> img_config;  //规定图像的长宽信息  
 class Mat   //需要先灰度化
 {
@@ -21,7 +22,7 @@ public:
 	double * operator [](int &index) { return main_mat[index]; };
 	double * operator [](const int &index) { return main_mat[index]; };
 	double * operator [](int &&index) { return main_mat[move(index)]; };
-
+	shared_ptr<D3DCOLOR> conver_to_d3dmat();  //把mat还原为d3dcolor数组
 private:
 	void _conver_to_mat(D3DCOLOR *surface);
 	int width;

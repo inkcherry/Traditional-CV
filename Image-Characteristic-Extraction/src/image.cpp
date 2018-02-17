@@ -12,6 +12,13 @@ image::image(D3DGraphics &d3d_, D3DCOLOR *image_surface_, const img_config &img_
 	//final_image_surface = new D3DCOLOR(img_config_.first*img_config_.second + 1);
 }
 
+image::image(D3DCOLOR * image_surface_, const img_config & img_config_):
+	inital_image_surface(image_surface_),
+	main_config(img_config_),
+	fourier_surface(nullptr)
+{
+}
+
 image::~image()
 {
 }

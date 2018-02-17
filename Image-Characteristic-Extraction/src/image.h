@@ -17,6 +17,7 @@ public:
 		LEFT
 	};
 	image(D3DGraphics &d3d_,D3DCOLOR *image_surface,const img_config &img_onfig) ;   
+	image(D3DCOLOR * image_surface_, const img_config & img_config);
 	~image();
 	void show_initial_image()const;  //处理前的图像
 	void show_final_image()const;	//处理后的图像

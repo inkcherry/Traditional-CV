@@ -111,13 +111,16 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	img.Grayscale(1);  //1为max法 2为均值法 3为加权均值
 	/*unit::test_init_kernel();*/
 
-	unit::test_bliateralblur();
+	//unit::test_bliateralblur();
 	/*unit::test_medianblur();*/
 	/*double ** after=unit::test_conv();*/
 	/*Mat w(after, 3, 3);*/
 
 
-	//Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
+	Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
+	shared_ptr<D3DCOLOR>test_c=mkk.conver_to_d3dmat();
+
+	image test(test_c.get(), mkk.get_img_config());
 	//filter fi(mkk);
 	
 
@@ -154,7 +157,9 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 			d3d.BeginFrame();
-			img.show_final_image();
+			test.show_initial_image();
+			//img.show_final_image();
+			
 			//img.show_fourier_image();
 			d3d.EndFrame();
 
