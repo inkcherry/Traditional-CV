@@ -120,10 +120,14 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
 	shared_ptr<D3DCOLOR>test_c=mkk.conver_to_d3dmat();
 
-	image test(test_c.get(), mkk.get_img_config());
+	image test(d3d,test_c.get(), mkk.get_img_config());
 	//filter fi(mkk);
-	
+	int test_width = mkk.get_img_config().first;
+	int test_height = mkk.get_img_config().second;
 
+
+	D3DCOLOR *temp = test.get_inital_surface();
+	test::show_d3dmat(temp, test_width, test_height);
 
 	
 	/*test::show_mat(t_fil.convolution(),4,4);*/
@@ -157,6 +161,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 			d3d.BeginFrame();
+
 			test.show_initial_image();
 			//img.show_final_image();
 			

@@ -63,6 +63,24 @@ using namespace std;
 		);
 	}
 
+	void test::show_d3dmat(unsigned long * d3dmat, const int & width, const int & height)
+	{
+		string show_mat = "";
+		for (int i = 0; i < height; i++)
+			for (int j = 0; j < width; j++)
+			{
+				show_mat += std::to_string(d3dmat[i*height+width]) + " ";
+			}
+		show_mat += "\n";
+		int msgboxID = MessageBox(
+			NULL,
+
+			(LPCSTR)show_mat.c_str(),
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+	}
+
 	void unit::test_init_kernel() {
 		double** test_mat = test::get_mat();
 		//test::show_mat(test_mat, 3, 3);
