@@ -109,10 +109,10 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
     MSG msg;
 
 	img.Grayscale(1);  //1为max法 2为均值法 3为加权均值
-	/*unit::test_init_kernel();*/
+	/*unit::test_init_kernel();*/   //核生成测试
 
-	//unit::test_bliateralblur();
-	/*unit::test_medianblur();*/
+	//unit::test_bliateralblur();  //双边滤波测试
+	/*unit::test_medianblur();*/   //中值滤波测试
 	/*double ** after=unit::test_conv();*/
 	/*Mat w(after, 3, 3);*/
 
@@ -124,22 +124,24 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	filter fi(pmk[0]);
 
 
-    pmk[1]=fi.bliateralblur(1,1,1);
+    pmk[1]=fi.bliateralblur(60,100,100);
     pmk[2]=fi.medianblur();
 	/*fi.GaussianBlur(3, 1);*/
 
+	pmk[0]->show_main_mat();
 
-	shared_ptr<D3DCOLOR>sp_temp_d3d_mat;
+
+	shared_ptr<D3DCOLOR>sp_temp_d3d_mat[3];
 
 	image* pimage[3];
 
 	for (int i = 0; i < 3; i++)  // 玩点为数组转换提供一个接口
 	{
-		sp_temp_d3d_mat = pmk[i]->conver_to_d3dmat();
-		pimage[i]=new image(d3d, sp_temp_d3d_mat.get(), pmk[i]->get_img_config());
+		sp_temp_d3d_mat[i] = pmk[i]->conver_to_d3dmat();
+		pimage[i]=new image(d3d, sp_temp_d3d_mat[i].get(), pmk[i]->get_img_config());
 	}
 
-
+	pmk[1]->show_main_mat();
 
 	shared_ptr<D3DCOLOR>test_c=mkk.conver_to_d3dmat();
 	image test(d3d,test_c.get(), mkk.get_img_config());
@@ -166,7 +168,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	//img.ConverTo_Fourier_atlas(m);
 	
 	//m.dft();
-	/*m.get_fourier_surface();*/
+	/*m.get_fourier_surface();*/  //傅里叶变换测试
 	/*m.show_main_mat();*/
 	//D3DCOLOR m = D3DCOLOR_ARGB(0, 100, 102, 103);
 	//int mm =(int)img.to_matrix_max(m);
@@ -191,7 +193,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 			d3d.BeginFrame();
 
-			test.show_initial_image(100,100);
+			//test.show_initial_image(100,100);
 			
 			for (int i = 0; i < 3; i++)
 			{

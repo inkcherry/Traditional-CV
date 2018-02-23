@@ -119,7 +119,7 @@ using namespace std;
 		Mat *inital_mat = new Mat(mat, 3, 4);
 		
 		filter t_fi(inital_mat);
-		Mat *res_mat = t_fi.bliateralblur(1, 1, 1);
+		Mat *res_mat = t_fi.bliateralblur(30, 10, 10);
 		res_mat->show_main_mat();
 
 	}

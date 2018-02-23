@@ -1,4 +1,5 @@
 #include <math.h>
+#include <cmath>
 #include <iostream>
 const int channels = 1; //先试通道为1
 double *initial_mat=nullptr;  //
@@ -69,7 +70,7 @@ void Bilateral_Filter(int width,int height,double *initial_mat,int r, double sig
 						y_tmp = y_tmp < 0 ? 0 : y_tmp;
 						y_tmp = y_tmp > ny - 1 ? ny - 1 : y_tmp;
 
-						int pixcel_dif = (int)abs(img_tmp[y_tmp * channels * nx +channels * x_tmp + k] - img_tmp[i * channels * nx + channels * j + k]);
+						int pixcel_dif = (int)std::abs(img_tmp[y_tmp * channels * nx +channels * x_tmp + k] - img_tmp[i * channels * nx + channels * j + k]);
 						double weight_tmp = d_metrix[m + r][n + r] * r_metrix[pixcel_dif];  // 复合权重
 
 						pixcel_sum += img_tmp[y_tmp *channels * nx + channels * x_tmp + k] * weight_tmp;

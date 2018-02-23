@@ -209,7 +209,7 @@ Mat* filter::medianblur()
 
 
 
-	res_mat_->show_main_mat();
+	/*res_mat_->show_main_mat();*/
 
 
 	return res_mat_;
