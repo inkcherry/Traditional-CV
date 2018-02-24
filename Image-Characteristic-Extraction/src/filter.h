@@ -58,7 +58,7 @@ class filter   //滤波类 提供一般的滤波接口   会通过滤波修改Mat的值
 public:
 	explicit filter(Mat* &main_mat_r) ;
 	~filter();
-	double**  convolution();  //卷积
+	double**  convolution();  //卷积  设为友元是为了让为形态学操作提供接口
 
 	/*线性滤波函数 */  //参数为核函数大小
 	void boxblur(const int &kernel_width,const int &kernel_height);//方框滤波
@@ -84,5 +84,15 @@ private:
 	kernel *kernel_mat ;
 	int width, height;
 	Mat *main_mat;
+};
+
+class morph   
+{
+	explicit morph(Mat* &main_mat_r);
+	Mat *erode(const int& size,const double &element);
+	Mat *dilate(const int & size,const double &element);
+	//核不应当作为成员 但是已经踩了坑 要微笑这继续踩下去
+
+
 };
 
