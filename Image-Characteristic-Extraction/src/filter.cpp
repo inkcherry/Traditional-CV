@@ -1,4 +1,5 @@
 #include "filter.h"
+#include "morph.h"
 filter::filter(Mat*  &main_mat_r):main_mat(main_mat_r),
 width(main_mat_r->get_img_config().first),
 height(main_mat_r->get_img_config().second),
@@ -416,3 +417,4 @@ void kernel_factory::init_blur_kernel(Mat* & main_mat_r, const int &k_width, con
 	}
 	factory_kernel = new kernel(kernel_mat, const_cast<int &>(k_width), const_cast<int &>(k_height));
 }
+

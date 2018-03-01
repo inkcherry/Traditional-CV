@@ -158,6 +158,7 @@
     <ClCompile Include="src\image.cpp" />
     <ClCompile Include="src\Keyboard.cpp" />
     <ClCompile Include="src\Mat.cpp" />
+    <ClCompile Include="src\morph.cpp" />
     <ClCompile Include="src\unit_test.cpp" />
     <ClCompile Include="src\Windows.cpp" />
   </ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="src\image.h" />
     <ClInclude Include="src\Keyboard.h" />
     <ClInclude Include="src\Mat.h" />
+    <ClInclude Include="src\morph.h" />
     <ClInclude Include="src\Resource.h" />
     <ClInclude Include="src\unit_test.h" />
   </ItemGroup>

@@ -42,6 +42,9 @@
     <ClCompile Include="src\unit_test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\morph.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\bitmap.h">
@@ -69,6 +72,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\unit_test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\morph.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

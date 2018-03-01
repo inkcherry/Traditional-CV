@@ -9,6 +9,7 @@
 #include "Mat.h"
 #include "unit_test.h"
 #include "filter.h"
+#include "morph.h"
 static KeyboardServer kServ;
 
 LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
