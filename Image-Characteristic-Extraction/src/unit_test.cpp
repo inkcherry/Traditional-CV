@@ -1,6 +1,7 @@
 #include "unit_test.h"
 #include "Mat.h"
 #include "filter.h"
+#include "morph.h"
 
 using namespace std;
 	double** test::get_mat() {
@@ -121,6 +122,15 @@ using namespace std;
 		filter t_fi(inital_mat);
 		Mat *res_mat = t_fi.bliateralblur(30, 10, 10);
 		res_mat->show_main_mat();
+
+	}
+
+	void unit::test_morph()
+	{
+		Mat *mat = new Mat(test::get_mat(),3,3);
+		morph mor_unit(mat);
+		Mat *after_morphop_mat = mor_unit.dilate(3,3);
+		after_morphop_mat->show_main_mat();
 
 	}
 

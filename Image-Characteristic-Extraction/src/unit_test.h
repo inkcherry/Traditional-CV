@@ -14,6 +14,7 @@ namespace unit {
 	void test_medianblur();
 	void test_init_kernel();
 	void test_bliateralblur();
+	void test_morph();
 	double** test_conv();
 	
 }

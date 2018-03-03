@@ -61,24 +61,39 @@ void Mat:: _conver_to_mat(D3DCOLOR *surface)
 
 }
 void Mat::show_main_mat()    //调试 以messagebox形式打印矩阵 （应该还有更好的办法）
-{
-	string show_mat = "";
-	for (int i = 0; i < height; i++)
+{   
+	if (main_mat == nullptr) 
 	{
-		for (int j = 0; j < width; j++)
-		{
-			show_mat += std::to_string(main_mat[i][j]) + " ";
-		}
-		show_mat += "\n";
+		int msgboxID = MessageBox(
+			NULL,
 
+			(LPCSTR)L"NULLPTR(mat)",
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+		return;
 	}
-	int msgboxID = MessageBox(
-		NULL,
-		
-		(LPCSTR)show_mat.c_str(),
-		(LPCSTR)L"Account Details",
-		MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
-	);
+
+		string show_mat = "";
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				
+
+				show_mat += std::to_string(main_mat[i][j]) + " ";
+			}
+			show_mat += "\n";
+
+		}
+		int msgboxID = MessageBox(
+			NULL,
+
+			(LPCSTR)show_mat.c_str(),
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+	
 }
 Mat::~Mat()
 {

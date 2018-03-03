@@ -6,17 +6,24 @@ height(main_mat_r->get_img_config().second),
 kernel_mat(nullptr)//默认
 {
 	double **default_kernel = new double *[3];    //默认矩形核
-	for(int i=0;i<3;i++)
+	for (int i = 0; i < 3; i++)
+	{
+		default_kernel[i] = new double[3];
 		for (int j = 0; j < 3; j++)
 		{
 			default_kernel[i][j] = 1;
 		}
+	}
 	kernel_mat = new kernel(default_kernel,3,3);
 }
 
 Mat * morph::morph_operate(bool is_erode)  //
 {
-	double ** res_mat;
+	double ** res_mat = new double *[height];
+	for (int i = 0; i < height; i++)
+	{
+		res_mat[i] = new double[width];
+	}
 	//默认核是平坦的 
 	if (kernel_mat->main_config.first != kernel_mat->main_config.second) //方形检测
 		exit(-1);
@@ -145,7 +152,8 @@ Mat * morph::morph_operate(bool is_erode)  //
 	{
 
 	}
-
+	Mat* res_mat_ = new  Mat(res_mat,width,height);
+	return res_mat_;
 	return nullptr;
 }
 

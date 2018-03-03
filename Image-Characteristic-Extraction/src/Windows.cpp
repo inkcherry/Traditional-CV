@@ -117,45 +117,54 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	/*double ** after=unit::test_conv();*/
 	/*Mat w(after, 3, 3);*/
 
+	unit::test_morph();
+
+
 
 	Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
-
-	Mat* pmk[3];
-	pmk[0] = &mkk;  //0是原始的
-	filter fi(pmk[0]);
-
-
-    pmk[1]=fi.bliateralblur(60,100,100);
-    pmk[2]=fi.medianblur();
-	/*fi.GaussianBlur(3, 1);*/
-
-	pmk[0]->show_main_mat();
+	                    
+															 
+															 //
+						//Mat* pmk[3];
+						//pmk[0] = &mkk;  //0是原始的
+						//filter fi(pmk[0]);
 
 
-	shared_ptr<D3DCOLOR>sp_temp_d3d_mat[3];
+					 //   pmk[1]=fi.bliateralblur(60,100,100);
+					 //   pmk[2]=fi.medianblur();
+						///*fi.GaussianBlur(3, 1);*/
 
-	image* pimage[3];
-
-	for (int i = 0; i < 3; i++)  // 玩点为数组转换提供一个接口
-	{
-		sp_temp_d3d_mat[i] = pmk[i]->conver_to_d3dmat();
-		pimage[i]=new image(d3d, sp_temp_d3d_mat[i].get(), pmk[i]->get_img_config());
-	}
-
-	pmk[1]->show_main_mat();
-
-	shared_ptr<D3DCOLOR>test_c=mkk.conver_to_d3dmat();
-	image test(d3d,test_c.get(), mkk.get_img_config());
-	//filter fi(mkk);
-	
+						//pmk[0]->show_main_mat();
 
 
+						//shared_ptr<D3DCOLOR>sp_temp_d3d_mat[3];
 
-	int test_width = mkk.get_img_config().first;
-	int test_height = mkk.get_img_config().second;
+						//image* pimage[3];
+
+						//for (int i = 0; i < 3; i++)  // 玩点为数组转换提供一个接口
+						//{
+						//	sp_temp_d3d_mat[i] = pmk[i]->conver_to_d3dmat();
+						//	pimage[i]=new image(d3d, sp_temp_d3d_mat[i].get(), pmk[i]->get_img_config());
+						//}
+
+						//pmk[1]->show_main_mat();
+
+						//shared_ptr<D3DCOLOR>test_c=mkk.conver_to_d3dmat();
+						//image test(d3d,test_c.get(), mkk.get_img_config());
+						////filter fi(mkk);
+						//
 
 
-	D3DCOLOR *temp = test.get_inital_surface();
+
+						//int test_width = mkk.get_img_config().first;
+						//int test_height = mkk.get_img_config().second;
+
+
+						//D3DCOLOR *temp = test.get_inital_surface();
+
+
+
+
 
 
 	/*test::show_d3dmat(temp, test_width, test_height);
@@ -192,17 +201,17 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 
-			d3d.BeginFrame();
+		/*	d3d.BeginFrame();*/
 
 			//test.show_initial_image(100,100);
 			
-			for (int i = 0; i < 3; i++)
+		/*	for (int i = 0; i < 3; i++)
 			{
 				pimage[i]->show_initial_image((i + 1) * 100, (i + 1) * 100);
 			}
-			
+			*/
 			//img.show_fourier_image();
-			d3d.EndFrame();
+		/*	d3d.EndFrame();*/
 
 
 

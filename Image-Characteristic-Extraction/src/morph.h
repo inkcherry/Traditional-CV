@@ -3,11 +3,11 @@
 
 class morph     //考虑 把filter和morph写一个父类 
 {
-	
+public:
 	explicit morph(Mat* &main_mat_r);
 	explicit morph(Mat* &main_mat_r, double **kernel);
-	Mat *erode(const int& size, const double &element) { morph_operate(true); };
-	Mat *dilate(const int & size, const double &element) { morph_operate(false); };
+	Mat *erode(const int& size, const double &element) { return morph_operate(true); };
+	Mat *dilate(const int & size, const double &element) {return morph_operate(false); };
 	//核不应当作为成员 但是已经踩了坑 要微笑这继续踩下去
 
 
