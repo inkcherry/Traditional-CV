@@ -29,44 +29,116 @@ Mat * morph::morph_operate(bool is_erode)  //
 
 	const int bottom = height - size - 1;
 	const int right = width - size - 1;
-
-	if (!is_erode)
+	double t_max;
+	int l, r, t, b;
+	if (!is_erode)    //膨胀 （取最大值）
 	{ 
 		for (int i = edge; i < height-edge; i++)  //中心处理
 		{
-			double t_max = 0;
+			 t_max = 0;
 			for (int j = edge; j < width-edge; j++)
 			{
-				int l = i - 1, r = i + 1, int t = j - 1, b = j + 1;
+				 l = i - edge, r = i + edge,  t = j - edge, b = edge + 1;
 				for(int k=t;k<b;k++)  
 					for (int s = l; s < r; s++)
 					{
 						if ((*main_mat)[k][s] > t_max)
 							t_max = (*main_mat)[k][s];
 					}
+				res_mat[i][j] = t_max;
 			}
 		}
 
 		for (int i = 0; i < edge; i++)  //边缘处理(上)
 		{
-			for (int j = 0; j < width; j++);
+			 t_max = 0;
+			for (int j = 0; j < width; j++)
+			{
+				l = i - edge, r = i + edge, t = j - edge, b = edge + 1;
+				//对边远地带的越界处理  上部分  b（bottom)不会越界
+				l = l < 0 ? 0 : l;
+				r = r > width - 1 ? width - 1 : r;
+				t = t < 0 ? 0 : t;
+				
+				for (int k = t; k < b; k++)
+					for (int s = l; s < r; s++)
+					{
+						if ((*main_mat)[k][s] > t_max)
+							t_max = (*main_mat)[k][s];
+					}
+				res_mat[i][j] = t_max;
+
+			}
 		}
 		
 		for (int i = height - edge; i < height-1; i++)//边缘处理(下)
 		{
-			for (int j = 0; j < width; j++);
+			t_max = 0;
+
+			for (int j = 0; j < width; j++)
+			{
+				l = i - edge, r = i + edge, t = j - edge, b = edge + 1;
+				//对边远地带的越界处理  下部分   t（top)不会越界
+				l = l < 0 ? 0 : l;
+				r = r > width - 1 ? width - 1 : r;
+				t = t < 0 ? 0 : t;
+				b = b > height - 1 ? height - 1 : b;
+
+				for (int k = t; k < b; k++)
+					for (int s = l; s < r; s++)
+					{
+						if ((*main_mat)[k][s] > t_max)
+							t_max = (*main_mat)[k][s];
+					}
+				res_mat[i][j] = t_max;
+
+			}
 		}
 
 		for (int i = 0; i < height; i++)      //(左)
 		{
-			for (int j = 0; j < edge; j++);
+			t_max = 0;
+
+			for (int j = 0; j < edge; j++)
+			{
+				l = i - edge, r = i + edge, t = j - edge, b = edge + 1;
+				//对边远地带的越界处理  左部分r（right)不会越界
+				l = l < 0 ? 0 : l;
+				t = t < 0 ? 0 : t;
+				b = b > height - 1 ? height - 1 : b;
+
+				for (int k = t; k < b; k++)
+					for (int s = l; s < r; s++)
+					{
+						if ((*main_mat)[k][s] > t_max)
+							t_max = (*main_mat)[k][s];
+					}
+				res_mat[i][j] = t_max;
+
+			}
 		}
 
 		for (int i = 0; i < height; i++)  //(右)
 		{
-			for (int j = width - edge; j < width; j++);
-		}
+			t_max = 0;
 
+			for (int j = width - edge; j < width; j++)
+			{
+				l = i - edge, r = i + edge, t = j - edge, b = edge + 1;
+				//对边远地带的越界处理  右部分l（left）不会越界
+				l = l < 0 ? 0 : l;
+				t = t < 0 ? 0 : t;
+				b = b > height - 1 ? height - 1 : b;
+
+				for (int k = t; k < b; k++)
+					for (int s = l; s < r; s++)
+					{
+						if ((*main_mat)[k][s] > t_max)
+							t_max = (*main_mat)[k][s];
+					}
+				res_mat[i][j] = t_max;
+			}
+		}
 	}
 
 	else
