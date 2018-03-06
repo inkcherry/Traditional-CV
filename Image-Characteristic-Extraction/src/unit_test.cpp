@@ -127,10 +127,16 @@ using namespace std;
 
 	void unit::test_morph()
 	{
-		Mat *mat = new Mat(test::get_mat(),3,3);
-		morph mor_unit(mat);
-		Mat *after_morphop_mat = mor_unit.dilate(3,3);
-		after_morphop_mat->show_main_mat();
+		/*	Mat *mat = new Mat(test::get_mat(),3,3);
+			morph mor_unit(mat);
+			Mat *after_morphop_mat = mor_unit.dilate(3,3);
+			after_morphop_mat->show_main_mat();*/
+
+
+		Mat *mat2 = new Mat(test::get_mat2(), 3, 4);
+		morph mor_unit2(mat2);
+		Mat *after_morphop_mat2 = mor_unit2.dilate(3, 3);
+		after_morphop_mat2->show_main_mat();
 
 	}
 

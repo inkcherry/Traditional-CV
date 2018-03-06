@@ -45,9 +45,9 @@ Mat * morph::morph_operate(bool is_erode)  //
 			 t_max = 0;
 			for (int j = edge; j < width-edge; j++)
 			{
-				 l = i - edge, r = i + edge,  t = j - edge, b = edge + 1;
-				for(int k=t;k<b;k++)  
-					for (int s = l; s < r; s++)
+				 l = j - edge, r = j + edge,  t = i - edge, b = i+edge;
+				for(int k=t;k<=b;k++)  
+					for (int s = l; s <= r; s++)
 					{
 						if ((*main_mat)[k][s] > t_max)
 							t_max = (*main_mat)[k][s];
@@ -61,14 +61,14 @@ Mat * morph::morph_operate(bool is_erode)  //
 			 t_max = 0;
 			for (int j = 0; j < width; j++)
 			{
-				l = i - edge, r = i + edge, t = j - edge, b = edge + 1;
+				l = j - edge, r = j + edge, t = i - edge, b = i+edge ;
 				//对边远地带的越界处理  上部分  b（bottom)不会越界
 				l = l < 0 ? 0 : l;
 				r = r > width - 1 ? width - 1 : r;
 				t = t < 0 ? 0 : t;
 				
-				for (int k = t; k < b; k++)
-					for (int s = l; s < r; s++)
+				for (int k = t; k <= b; k++)
+					for (int s = l; s <= r; s++)
 					{
 						if ((*main_mat)[k][s] > t_max)
 							t_max = (*main_mat)[k][s];
@@ -78,21 +78,21 @@ Mat * morph::morph_operate(bool is_erode)  //
 			}
 		}
 		
-		for (int i = height - edge; i < height-1; i++)//边缘处理(下)
+		for (int i = height - edge; i < height; i++)//边缘处理(下)
 		{
 			t_max = 0;
 
 			for (int j = 0; j < width; j++)
 			{
-				l = i - edge, r = i + edge, t = j - edge, b = edge + 1;
+				l = j - edge, r = j + edge, t = i - edge, b = i+edge;
 				//对边远地带的越界处理  下部分   t（top)不会越界
 				l = l < 0 ? 0 : l;
 				r = r > width - 1 ? width - 1 : r;
-				t = t < 0 ? 0 : t;
+				
 				b = b > height - 1 ? height - 1 : b;
 
-				for (int k = t; k < b; k++)
-					for (int s = l; s < r; s++)
+				for (int k = t; k <= b; k++)
+					for (int s = l; s <=r; s++)
 					{
 						if ((*main_mat)[k][s] > t_max)
 							t_max = (*main_mat)[k][s];
@@ -108,14 +108,14 @@ Mat * morph::morph_operate(bool is_erode)  //
 
 			for (int j = 0; j < edge; j++)
 			{
-				l = i - edge, r = i + edge, t = j - edge, b = edge + 1;
+				l = j - edge, r = j + edge, t = i - edge, b =i + edge;
 				//对边远地带的越界处理  左部分r（right)不会越界
 				l = l < 0 ? 0 : l;
 				t = t < 0 ? 0 : t;
 				b = b > height - 1 ? height - 1 : b;
 
-				for (int k = t; k < b; k++)
-					for (int s = l; s < r; s++)
+				for (int k = t; k <= b; k++)
+					for (int s = l; s <= r; s++)
 					{
 						if ((*main_mat)[k][s] > t_max)
 							t_max = (*main_mat)[k][s];
@@ -131,14 +131,14 @@ Mat * morph::morph_operate(bool is_erode)  //
 
 			for (int j = width - edge; j < width; j++)
 			{
-				l = i - edge, r = i + edge, t = j - edge, b = edge + 1;
+				l = j - edge, r = j + edge, t = i - edge, b = i + edge;
 				//对边远地带的越界处理  右部分l（left）不会越界
 				l = l < 0 ? 0 : l;
 				t = t < 0 ? 0 : t;
 				b = b > height - 1 ? height - 1 : b;
 
-				for (int k = t; k < b; k++)
-					for (int s = l; s < r; s++)
+				for (int k = t; k <= b; k++)
+					for (int s = l; s <= r; s++)
 					{
 						if ((*main_mat)[k][s] > t_max)
 							t_max = (*main_mat)[k][s];
@@ -147,11 +147,20 @@ Mat * morph::morph_operate(bool is_erode)  //
 			}
 		}
 	}
+	
 
-	else
-	{
+	//
 
-	}
+	//else
+	//{
+
+	//}
+	//	for (int i = 0; i < height; i++)
+	//	for (int j = 0; j < width; j++)
+	//		int a = res_mat[i][j];
+
+	//
+
 	Mat* res_mat_ = new  Mat(res_mat,width,height);
 	return res_mat_;
 	return nullptr;
