@@ -135,7 +135,8 @@ using namespace std;
 
 		Mat *mat2 = new Mat(test::get_mat2(), 3, 4);
 		morph mor_unit2(mat2);
-		Mat *after_morphop_mat2 = mor_unit2.dilate(3, 3);
+		//Mat *after_morphop_mat2 = mor_unit2.dilate(3, 3);
+		Mat *after_morphop_mat2 = mor_unit2.erode(3, 3);
 		after_morphop_mat2->show_main_mat();
 
 	}
