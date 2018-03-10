@@ -18,6 +18,37 @@ kernel_mat(nullptr)//默认
 }
 
 
+Mat * morph::open_op(const int & size)
+{
+	Mat *intial_main_mat = main_mat;
+	//开闭运算都是以成员main_mat为基础，需要暂时修改main_mat的值并在最后还原之
+	main_mat = erode(size, 1.0);
+	Mat *res_mat= dilate(size, 1.0);
+
+
+	delete main_mat;  //删除中间矩阵
+	main_mat = intial_main_mat;
+
+	return res_mat;
+	return nullptr;
+}
+
+Mat * morph::close_op(const int & size)
+{
+	Mat *intial_main_mat = main_mat;
+	//开闭运算都是以成员main_mat为基础，需要暂时修改main_mat的值并在最后还原之
+	
+	
+	main_mat = dilate(size,1.0);
+	Mat *res_mat = erode(size, 1.0);
+
+	delete main_mat;
+	main_mat = intial_main_mat;
+
+	return res_mat;
+	return nullptr;
+}
+
 Mat * morph::morph_operate(bool is_erode)  //
 {
 	double ** res_mat = new double *[height];

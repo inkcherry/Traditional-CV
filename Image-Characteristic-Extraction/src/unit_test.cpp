@@ -141,6 +141,15 @@ using namespace std;
 
 	}
 
+	void unit::test_morph2()
+	{
+		Mat *mat2 = new Mat(test::get_mat2(), 3, 4);
+		morph mor_unit2(mat2);
+		//Mat *after_morphop_mat2 = mor_unit2.dilate(3, 3);
+		Mat *after_morphop_mat2 = mor_unit2.open_op(3);
+		after_morphop_mat2->show_main_mat();
+	}
+
 	double ** unit::test_conv() {
 		double **mat = test::get_mat();
 		Mat  *analog_matrix = new Mat(mat, 3, 3);

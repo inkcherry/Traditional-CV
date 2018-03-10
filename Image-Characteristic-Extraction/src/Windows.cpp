@@ -117,8 +117,8 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	/*double ** after=unit::test_conv();*/
 	/*Mat w(after, 3, 3);*/
 
-	unit::test_morph();
-
+	/*unit::test_morph();*/
+	unit::test_morph2();
 
 
 	Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵

@@ -15,6 +15,7 @@ namespace unit {
 	void test_init_kernel();
 	void test_bliateralblur();
 	void test_morph();
+	void test_morph2();   //open_op   close_op
 	double** test_conv();
 	
 }
