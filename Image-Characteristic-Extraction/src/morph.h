@@ -12,8 +12,10 @@ public:
 
 
 	//
-	Mat *open_op(const int &size);   //腐蚀min+膨胀max
-	Mat *close_op(const int &szie);//膨胀+腐蚀
+	Mat *open_op(const int &size);   //腐蚀min+膨胀max 总体↓
+	Mat *close_op(const int &szie);//膨胀+腐蚀 总体 ↑
+	Mat *top_hat(const int &szie);//顶帽  原图像与开运算之差
+	Mat *black_hat(const int &szie); //黑帽	原图像与闭运算之差
 private:
 	Mat *morph_operate(bool is_erode);
 	kernel *kernel_mat;
