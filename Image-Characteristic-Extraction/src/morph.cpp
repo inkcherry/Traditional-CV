@@ -49,33 +49,38 @@ Mat * morph::close_op(const int & size)
 	return nullptr;
 }
 
-Mat * morph::top_hat(const int &szie)
+Mat * morph::top_hat(const int &size)
 { 
-	Mat *after_openop_mat = open_op(szie);
+	Mat *after_openop_mat = open_op(size);
 	double **res_mat = new double *[height];
-	for (int i = 0; i < width; i++)
+	for (int i = 0; i < height; i++)
 	{
 		res_mat[i] = new double[width];
 		for (int j = 0; j < width; j++)
 			res_mat[i][j] = 0;
 	}
+	
+
+	
 
 	for(int i=0;i<height;i++)
 		for (int j = 0; j < width; j++)
 		{
-			res_mat[i][j] = main_mat[i][j] - after_openop_mat[i][j];
+			double m = (*after_openop_mat)[i][j];
+			res_mat[i][j] = ((*main_mat)[i][j]) - ((*after_openop_mat)[i][j]);
 		}
 
 	Mat *res_mat_ = new Mat(res_mat, width, height);
+	delete after_openop_mat;
 	return res_mat_;
 	return nullptr;
 }
 
-Mat * morph::black_hat(const int & szie)
+Mat * morph::black_hat(const int & size)
 {
-	Mat *after_closeop_mat = close_op(szie);
+	Mat *after_closeop_mat = close_op(size);
 	double **res_mat = new double *[height];
-	for (int i = 0; i < width; i++)
+	for (int i = 0; i < height; i++)
 	{
 		res_mat[i] = new double[width];
 		for (int j = 0; j < width; j++)
@@ -85,10 +90,11 @@ Mat * morph::black_hat(const int & szie)
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++)
 		{
-			res_mat[i][j] = after_closeop_mat[i][j] - main_mat[i][j];
+			res_mat[i][j] = (*after_closeop_mat)[i][j] - (*main_mat)[i][j];
 		}
 
 	Mat *res_mat_ = new Mat(res_mat, width, height);
+	delete after_closeop_mat;
 	return res_mat_;
 	return nullptr;
 }

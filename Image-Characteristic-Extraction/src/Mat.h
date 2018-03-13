@@ -23,6 +23,9 @@ public:
 	double * operator [](const int &index) { return main_mat[index]; };
 	double * operator [](int &&index) { return main_mat[move(index)]; };
 	shared_ptr<D3DCOLOR> conver_to_d3dmat();  //把mat还原为d3dcolor数组
+
+	inline void set_value(int &i, int &j, double &value) { main_mat[i][j] = value; }
+
 private:
 	void _conver_to_mat(D3DCOLOR *surface);
 	int width;
