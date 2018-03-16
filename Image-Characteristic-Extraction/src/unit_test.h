@@ -16,7 +16,7 @@ namespace unit {
 	void test_bliateralblur();
 	void test_morph();
 	void test_morph2();   //open_op   close_op
-	void test_morph3();   //high_hat  black_hat
+	void test_morph3();   //high_hat  black_hat  grap
 	double** test_conv();
 	
 }

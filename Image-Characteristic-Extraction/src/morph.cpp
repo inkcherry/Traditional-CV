@@ -49,6 +49,30 @@ Mat * morph::close_op(const int & size)
 	return nullptr;
 }
 
+Mat * morph::morph_grad(const int & size)
+{
+	double **res_mat = new double *[height];
+	for (int i = 0; i < height; i++)
+	{
+		res_mat[i] = new double[width];
+		for (int j = 0; j < width; j++)
+			res_mat[i][j] = 0;
+	}
+
+	Mat *after_erode = erode(size,1);
+	Mat *after_dilate = dilate(size,1);
+	for (int i = 0; i < height; i++)
+		for (int j = 0; j < width; j++)
+		{
+			res_mat[i][j] = ((*after_dilate)[i][j]) - ((*after_erode)[i][j]);
+		}
+	Mat *res_mat_ = new Mat(res_mat, width, height);
+	delete after_erode;
+	delete after_dilate;
+	return res_mat_;
+	return nullptr;
+}
+
 Mat * morph::top_hat(const int &size)
 { 
 	Mat *after_openop_mat = open_op(size);
@@ -66,7 +90,6 @@ Mat * morph::top_hat(const int &size)
 	for(int i=0;i<height;i++)
 		for (int j = 0; j < width; j++)
 		{
-			double m = (*after_openop_mat)[i][j];
 			res_mat[i][j] = ((*main_mat)[i][j]) - ((*after_openop_mat)[i][j]);
 		}
 
@@ -120,7 +143,7 @@ Mat * morph::morph_operate(bool is_erode)  //
 	const int right = width - size - 1;
 	double t_max=0,t_min=256;
 	int l, r, t, b;
-	if (!is_erode)    //膨胀 （取最大值）
+	if (!is_erode)    //膨胀  dilate（取最大值）
 	{ 
 		for (int i = edge; i < height-edge; i++)  //中心处理
 		{

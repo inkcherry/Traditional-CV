@@ -157,8 +157,11 @@ using namespace std;
 		//Mat *after_morphop_mat2 = mor_unit2.dilate(3, 3);
 		Mat *after_morphop_mat2 = mor_unit2.top_hat(3);
 		Mat *after_morphop_mat3 = mor_unit2.black_hat(3);
-		after_morphop_mat2->show_main_mat();
-		after_morphop_mat3->show_main_mat();
+		Mat *after_morphop_mat4 = mor_unit2.morph_grad(3);
+
+	/*	after_morphop_mat2->show_main_mat();
+		after_morphop_mat3->show_main_mat();*/
+		after_morphop_mat4->show_main_mat();
 	}
 
 	double ** unit::test_conv() {
