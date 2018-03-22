@@ -159,6 +159,7 @@
     <ClCompile Include="src\Keyboard.cpp" />
     <ClCompile Include="src\Mat.cpp" />
     <ClCompile Include="src\morph.cpp" />
+    <ClCompile Include="src\transform.cpp" />
     <ClCompile Include="src\unit_test.cpp" />
     <ClCompile Include="src\Windows.cpp" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <ClInclude Include="src\Mat.h" />
     <ClInclude Include="src\morph.h" />
     <ClInclude Include="src\Resource.h" />
+    <ClInclude Include="src\transform.h" />
     <ClInclude Include="src\unit_test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

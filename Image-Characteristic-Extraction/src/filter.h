@@ -68,7 +68,7 @@ public:
 	void boxblur(const int &kernel_width,const int &kernel_height);//方框滤波
 	void blur(const int &kernel_width, const int &kernel_height);   //均值滤波
 	void GaussianBlur(const int &kernel_size, const double &sigma);//高斯滤波
-
+	
 	/*End*/
 
 
@@ -82,7 +82,7 @@ public:
 	/*End*/
 
 
-
+	Mat *custom_kernel_op(kernel *&custom_kernel);   //对外提供一个接受自定义核的函数，以支持像sobel这样的操作
 	kernel*  get_kernel(){ return kernel_mat; }
 private:
 	kernel *kernel_mat ;

@@ -91,8 +91,6 @@ double** filter::convolution()  //mat卷积操作   main_mat与kernel_mat进行卷积操作
 
 		delete_res_mat(); //删除辅助运算的矩阵
 
-
-
 		return r_res_mat;
 }
 void filter::boxblur(const int & kernel_width, const int & kernel_height)
@@ -337,6 +335,15 @@ Mat * filter::bliateralblur(int r,int sigma_d,int sigma_r)   //滤波器边长   sigm
 	Mat *res_mat_ = new Mat(res_mat, width, height);
 	return res_mat_;
 
+	return nullptr;
+}
+
+Mat * filter::custom_kernel_op(kernel *& custom_kernel)
+{
+	
+	kernel_mat = custom_kernel;
+	Mat *res_mat_ = new Mat(convolution(), custom_kernel->main_config.first, custom_kernel->main_config.second);
+	return res_mat_;
 	return nullptr;
 }
 
