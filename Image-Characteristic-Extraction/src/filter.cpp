@@ -10,8 +10,8 @@ kernel_mat(nullptr)//默认
 
 filter::~filter()
 {
-	delete kernel_mat;
-	
+	   //emmm这个地方应该用智能指针的 不好整了 此处为坑
+	/*	delete kernel_mat;*/
 }
 
 double** filter::convolution()  //mat卷积操作   main_mat与kernel_mat进行卷积操作

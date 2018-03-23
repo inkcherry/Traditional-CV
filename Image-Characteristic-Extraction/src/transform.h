@@ -6,7 +6,7 @@ public:
 	void canny(double threshod1,double threshod2, int size=3);  //sizeÎªsobel¿×¾¶´óÐ¡
 
 
-	Mat* sobel();
+	Mat* sobel(bool type=1);
 	explicit transform(Mat* &main_mat_r);
 	~transform();
 	int width, height;

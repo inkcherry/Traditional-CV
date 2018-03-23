@@ -11,6 +11,24 @@ Mat::Mat(double ** arr, int width_, int height_):width(width_),height(height_)
 	main_mat = arr;   //·Çcopy 
 }
 
+Mat::Mat(int width, int height) : width(width), height(height)
+{
+	main_mat = new double*[height];
+	for (int i = 0; i < height; i++)
+	{
+		main_mat[i] = new double[width];
+		for (int j = 0; j < width; j++)
+		{
+			main_mat[i][j] = 0;
+			double a = main_mat[i][j];
+			int ap=1;
+		}
+	}
+	int b = main_mat[2][2];
+	this->show_main_mat();
+	
+}
+
 
  shared_ptr<D3DCOLOR> Mat::conver_to_d3dmat()
 {

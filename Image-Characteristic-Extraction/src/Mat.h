@@ -14,6 +14,7 @@ public:
 	
 	explicit Mat(img_config &image, D3DCOLOR *surface);  //像素矩阵转换为Mat
 	explicit Mat(double **arr, int width, int height);   //普通2d矩阵转换为Mat
+	explicit Mat(int width, int heiight);                //默认生成的全是0的矩阵
 	void show_main_mat();
 	~Mat();
 	f_2A_matrix<double> dft();//change  

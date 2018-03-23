@@ -2,6 +2,8 @@
 #include "Mat.h"
 #include "filter.h"
 #include "morph.h"
+#include  "transform.h"
+
 
 using namespace std;
 	double** test::get_mat() {
@@ -164,6 +166,8 @@ using namespace std;
 		after_morphop_mat4->show_main_mat();
 	}
 
+
+
 	double ** unit::test_conv() {
 		double **mat = test::get_mat();
 		Mat  *analog_matrix = new Mat(mat, 3, 3);
@@ -173,6 +177,14 @@ using namespace std;
 		double **after_conv_mat = t_fi.convolution();
 		test::show_mat(after_conv_mat, 3, 3);
 		return after_conv_mat;
+	}
+	void unit::test_sobel()
+	{
+		double **mat = test::get_mat();
+		Mat  *test_mat = new Mat(mat, 3, 3);
+		transform *test_sobel = new transform(test_mat);
+		test_sobel->sobel(1);
+
 	}
 
 

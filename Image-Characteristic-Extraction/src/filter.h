@@ -30,6 +30,39 @@ struct kernel //内核函数不提供计算功能  内核函数
 	//数组初始化
 	explicit kernel( double** &kernel_mat_, int &width, int &height) :kernel_mat(kernel_mat_), main_config(make_pair(width, height)) {};
 	explicit kernel(double** &kernel_mat_, int &&width, int &&height) :kernel_mat(kernel_mat_), main_config(make_pair(move(width), move(height))) {};
+	void show_kernel() {
+		if (kernel_mat == nullptr)
+		{
+			int msgboxID = MessageBox(
+				NULL,
+
+				(LPCSTR)L"NULLPTR(mat)",
+				(LPCSTR)L"Account Details",
+				MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+			);
+			return;
+		}
+
+		string show_mat = "";
+		for (int i = 0; i < main_config.second; i++)
+		{
+			for (int j = 0; j < main_config.first; j++)
+			{
+
+
+				show_mat += std::to_string(kernel_mat[i][j]) + " ";
+			}
+			show_mat += "\n";
+
+		}
+		int msgboxID = MessageBox(
+			NULL,
+
+			(LPCSTR)show_mat.c_str(),
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+	}
 public:
 	double **kernel_mat;
 	double * operator[](int &index) { return kernel_mat[index]; }
