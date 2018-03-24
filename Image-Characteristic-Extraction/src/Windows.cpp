@@ -120,7 +120,8 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	/*unit::test_morph();*/
 	//unit::test_morph2();
 	/*unit::test_morph3();*/
-	unit::test_sobel();
+	/*unit::test_sobel();*/
+	unit::test_laplace();
 
 	Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
 	                    

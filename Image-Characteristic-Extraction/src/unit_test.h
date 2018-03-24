@@ -19,6 +19,7 @@ namespace unit {
 	void test_morph3();   //high_hat  black_hat  grap
 
 	void test_sobel();
+	void test_laplace();
 	double** test_conv();
 	
 }

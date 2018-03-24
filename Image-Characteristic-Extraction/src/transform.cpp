@@ -15,7 +15,12 @@ transform::~transform()
 {
 }
 
-Mat* transform:: sobel(bool type )   //1为complex
+Mat * transform::laplacian(int ksize, double scale)
+{
+	return nullptr;
+}
+
+Mat* transform:: sobel(bool type )   //1为complex 
 {
 	pair<kernel*, kernel*> sobel_kernel =get_sobel(3);
 	filter *temp_filter =new filter(main_mat);
@@ -63,6 +68,15 @@ Mat* transform:: sobel(bool type )   //1为complex
 	return res_mat;
 	return nullptr;
 }
+Mat * transform::laplacian()
+{
+	kernel *laplacian_kernel = get_laplacian();
+	filter *temp_filter = new filter(main_mat);
+	Mat *res_mat = new Mat(width, height);
+	res_mat = temp_filter->custom_kernel_op(laplacian_kernel);
+	res_mat->show_main_mat();
+	return nullptr;
+}
 pair<kernel*,kernel*> transform::get_sobel(int size)
 {
 	//使用经典的sobel核
@@ -93,4 +107,28 @@ pair<kernel*,kernel*> transform::get_sobel(int size)
 
 	return make_pair(gx_kernel, gy_kernel);
 	return make_pair(nullptr,nullptr);
+}
+
+kernel * transform::get_laplacian()
+{   //dst   对图像求x二阶偏导+y二阶偏导
+	// ksize=1 约等于原图像于对如下核卷积
+	//0   1    0
+	//1  -4   1
+	//0   1   0
+	double gxy_[3][3] = { { -1,0,+1 },{ -2,0,+2 },{ -1,0,+1 } };
+	double **gxy = new double*[3];
+
+	for (int i = 0; i < 3; i++)
+	{
+		gxy[i] = new double[3];
+		for (int j = 0; j < 3; j++)
+		{
+			gxy[i][j] = gxy_[i][j];
+			gxy[i][j] = gxy_[i][j];
+		}
+	}
+	kernel *gxy_kernel = new kernel(gxy, 3, 3);
+	gxy_kernel->show_kernel();
+	return gxy_kernel;
+	return nullptr;
 }

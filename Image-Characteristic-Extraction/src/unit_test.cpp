@@ -183,7 +183,17 @@ using namespace std;
 		double **mat = test::get_mat();
 		Mat  *test_mat = new Mat(mat, 3, 3);
 		transform *test_sobel = new transform(test_mat);
-		test_sobel->sobel(1);
+		test_sobel->sobel(1);  
+
+	}
+
+	void unit::test_laplace()
+	{
+		double **mat = test::get_mat();
+		Mat  *test_mat = new Mat(mat, 3, 3);
+		transform *test_laplace = new transform(test_mat);
+		test_laplace->laplacian();
+
 
 	}
 
