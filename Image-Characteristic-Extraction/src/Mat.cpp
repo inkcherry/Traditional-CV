@@ -1,17 +1,17 @@
 #include "Mat.h"
 #include "dft.h"
 
-Mat::Mat( img_config &image,  D3DCOLOR *surface): width(image.first), height(image.second)
+Mat::Mat( img_config &image,  D3DCOLOR *surface): width(image.first), height(image.second),need_delete_mainmat(false)
 {
 	_conver_to_mat(surface);
 }
 
-Mat::Mat(double ** arr, int width_, int height_):width(width_),height(height_)
+Mat::Mat(double ** arr, int width_, int height_):width(width_),height(height_),need_delete_mainmat(false)
 {
 	main_mat = arr;   //·Çcopy 
 }
 
-Mat::Mat(int width, int height) : width(width), height(height)
+Mat::Mat(int width, int height) : width(width), height(height), need_delete_mainmat(true)
 {
 	main_mat = new double*[height];
 	for (int i = 0; i < height; i++)
@@ -115,7 +115,9 @@ void Mat::show_main_mat()    //µ÷ÊÔ ÒÔmessageboxÐÎÊ½´òÓ¡¾ØÕó £¨Ó¦¸Ã»¹ÓÐ¸üºÃµÄ°ì·
 }
 Mat::~Mat()
 {
+	if(need_delete_mainmat)
 	delete main_mat;
+	
 }
 f_2A_matrix<double> Mat::dft()
 {

@@ -19,7 +19,7 @@ public:
 private:
 
 	pair<kernel*, kernel*> get_sobel(int size);//获取sobel算子 默认的sobel算子
-	kernel* get_laplacian();//获取拉普拉算子，ksize=1的默认算子
+	kernel* get_laplacian(int mask_type=1);//获取拉普拉算子,默认掩模为1类型的算子
 
 	pair<kernel*, kernel*> get_sobel(int dx, int dy, int size);//自定义的soble内核 dx dy分别表示x y上的差分接数
 	kernel* get_laplacian(int ksize,double scale);//ksize 用于计算二阶导滤波器孔径尺寸，scale表示可选比例因子

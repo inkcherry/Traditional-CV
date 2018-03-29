@@ -15,8 +15,9 @@ transform::~transform()
 {
 }
 
-Mat * transform::laplacian(int ksize, double scale)
+Mat * transform::laplacian(int mask_type, double scale)
 {
+
 	return nullptr;
 }
 
@@ -72,9 +73,21 @@ Mat * transform::laplacian()
 {
 	kernel *laplacian_kernel = get_laplacian();
 	filter *temp_filter = new filter(main_mat);
+	Mat *sharpen_mat = new Mat(width, height);
+	sharpen_mat = temp_filter->custom_kernel_op(laplacian_kernel);
+	//res_mat->show_main_mat();
+
 	Mat *res_mat = new Mat(width, height);
-	res_mat = temp_filter->custom_kernel_op(laplacian_kernel);
+	double c = 0.5; //原图像与锐化后res=inital+ c(△2f(x,y)) 
+	for(int i=0;i<height;i++)
+		for (int j = 0; j < width; j++)
+		{
+			(*res_mat)[i][j] = c * (*sharpen_mat)[i][j] + (*main_mat)[i][j];
+		}
+	delete sharpen_mat;
+	delete temp_filter;
 	res_mat->show_main_mat();
+	return res_mat;
 	return nullptr;
 }
 pair<kernel*,kernel*> transform::get_sobel(int size)
@@ -109,13 +122,37 @@ pair<kernel*,kernel*> transform::get_sobel(int size)
 	return make_pair(nullptr,nullptr);
 }
 
-kernel * transform::get_laplacian()
+kernel * transform::get_laplacian(int mask_type)
 {   //dst   对图像求x二阶偏导+y二阶偏导
 	// ksize=1 约等于原图像于对如下核卷积
 	//0   1    0
 	//1  -4   1
 	//0   1   0
-	double gxy_[3][3] = { { -1,0,+1 },{ -2,0,+2 },{ -1,0,+1 } };
+	double (*gxy_)[3] ;
+	double gxy_1[3][3] = { { -0,1,+0 },{ 1,-4,1 },{ 0,1,0 } };
+	double gxy_2[3][3] = { { 1,1,1 },{ 1,-8,1 },{ 1,1,1 } };
+	double gxy_3[3][3] = { { 0,-1,0 },{ -1,4,-1 },{ 0,-1,0 } };
+	double gxy_4[3][3] = { { -1,-1,-1 },{ -1,8,-1 },{ -1,-1,-1 } };
+	switch (mask_type)
+	{
+	case 1:
+		gxy_ = gxy_1;
+		break;
+	case 2:
+		gxy_ = gxy_2;
+		break;
+	case 3:
+		gxy_ = gxy_3;
+		break;
+	case 4:
+		gxy_ = gxy_4;
+		break;
+	default:
+		break;
+	}
+
+
+
 	double **gxy = new double*[3];
 
 	for (int i = 0; i < 3; i++)
