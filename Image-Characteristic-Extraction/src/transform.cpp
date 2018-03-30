@@ -4,6 +4,56 @@ void transform::canny(double threshod1, double threshod2, int size )
 {
 }
 
+Mat * transform::op(pair<kernel*, kernel*>kernel_,bool type)
+{
+	filter *temp_filter = new filter(main_mat);
+
+	Mat *res_mat = new Mat(width, height);
+
+	Mat *gx_res = temp_filter->custom_kernel_op(kernel_.first);  //gx
+	Mat *gy_res = temp_filter->custom_kernel_op(kernel_.second);
+
+
+
+	//gx_res->show_main_mat();
+	//gy_res->show_main_mat();
+
+	res_mat->show_main_mat();
+
+	if (type = true)   //使用欧式距离内个公式
+	{
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
+			{
+				double cur_gx = (*gx_res)[i][j];
+				double cur_gy = (*gy_res)[i][j];
+				(*res_mat)[i][j] = sqrt(cur_gx*cur_gx + cur_gy*cur_gy);
+			}
+	}
+
+	if (type = false)
+	{
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
+			{
+				double cur_gx = (*gx_res)[i][j];
+				double cur_gy = (*gy_res)[i][j];
+				(*res_mat)[i][j] = abs(cur_gx) + abs(cur_gy);
+			}
+	}
+
+	res_mat->show_main_mat();
+
+
+	delete kernel_.first;
+	delete kernel_.second;
+	delete temp_filter;
+	return res_mat;
+	return nullptr;
+
+	return nullptr;
+}
+
 transform::transform(Mat* &main_mat_r):main_mat(main_mat_r),
 width(main_mat_r->get_img_config().first),
 height(main_mat_r->get_img_config().second)
@@ -106,6 +156,31 @@ Mat * transform::laplacian()
 	return res_mat;
 	return nullptr;
 }
+Mat * transform::treshold(int tresh)  //自定义阈值二值化
+{
+	Mat *res_mat = new Mat(width, height);
+	for(int i=0;i<height;i++)
+		for (int j = 0; j < width; j++)
+		{
+			if ((*main_mat)[i][j] > tresh)
+				(*res_mat)[i][j] = 255;
+			else 
+			{
+				*res_mat[i][j] = 0;
+			}
+		}
+	return nullptr;
+}
+Mat * transform::scharr()
+{
+	return op(get_op(SCHARR_OP),false);
+	return nullptr;
+}
+Mat * transform::prewitt()
+{
+	return op(get_op(PREWITT_OP), false);
+	return nullptr;
+}
 pair<kernel*,kernel*> transform::get_sobel(int size)
 {
 	//使用经典的sobel核
@@ -184,4 +259,75 @@ kernel * transform::get_laplacian(int mask_type)
 	gxy_kernel->show_kernel();
 	return gxy_kernel;
 	return nullptr;
+}
+
+pair<kernel*, kernel*> transform::get_op(OP_TYPE type)
+{
+	//不予实现prewitt算子生成过程 
+	double (*res_gx_)[3];
+	double (*res_gy_)[3];
+
+
+
+	//PREWITT_OP
+
+	//		   1
+	//1 0 -1  *1
+	//         1
+	double PREWITT_gx_[3][3] = { { 1,0,-1 },{ 1,0,-1 },{ 1,0,-1 } };
+	//         1
+	//1 1 1   *0
+	//         -1
+
+	double PREWITT_gy_[3][3] = { { 1,1,1 },{ 0,0,0 },{ -1,-1,-1 } };
+
+
+
+
+
+	//SCHARR_OP
+	//          1
+	//3 10 1  * 0
+	//          1
+
+	double SCHARR_gx_[3][3] = { { 3,10,3 },{ 0,0,0 },{ -3,-10,-3 } };
+
+
+	//		   1
+	//1 0 -1 * 1
+	//         1
+	double SCHARR_gy_[3][3] = { { 1,0,-1 },{ 1,0,-1 },{ 1,0,-1 } };
+
+
+	switch (type)
+	{
+	case PREWITT_OP:  //prewitt算子
+
+		res_gx_ = PREWITT_gx_;
+		res_gy_ = PREWITT_gy_;
+		break;
+	case SCHARR_OP://sscharr算子
+
+		res_gx_ = SCHARR_gx_;
+		res_gy_ = SCHARR_gy_;
+		break;
+	}
+
+
+	double **res_gx = new double *[3];
+	double **res_gy = new double *[3];
+	for (int i = 0; i < 3; i++)
+	{
+		res_gx[i] = new double[3];
+		res_gy[i] = new double[3];
+		for (int j = 0; j < 3; j++)
+		{
+
+			res_gx[i][j] = res_gx_[i][j];
+			res_gy[i][j] = res_gy_[i][j];
+		}
+	}
+	kernel *gx_kernel = new kernel(res_gx,3,3);
+	kernel *gy_kernel = new kernel(res_gy, 3, 3);
+	return make_pair(gx_kernel,gy_kernel);
 }
