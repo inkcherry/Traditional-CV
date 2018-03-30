@@ -25,3 +25,7 @@
     * 形态学梯度
     * 顶帽 
     * 黑帽
+* 边缘检测
+    * soble,Prewitt,Scharr算子
+    * Laplace算子
+    * 阈值处理（基础）
