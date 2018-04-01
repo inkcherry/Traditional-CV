@@ -107,9 +107,17 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	D3DGraphics d3d(hWnd);           //初始化D3DGraphics对象
 
 	image img(d3d, surface, config);
+	/*test::show_d3dmat(surface, 55, 29);*/
     MSG msg;
 
-	img.Grayscale(1);  //1为max法 2为均值法 3为加权均值
+
+
+
+
+
+
+	//img.Grayscale(1);  //1为max法 2为均值法 3为加权均值
+
 	/*unit::test_init_kernel();*/   //核生成测试
 
 	//unit::test_bliateralblur();  //双边滤波测试
@@ -121,10 +129,10 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	//unit::test_morph2();
 	/*unit::test_morph3();*/
 	/*unit::test_sobel();*/
-	unit::test_laplace();
+	/*unit::test_laplace();*/
 
-	Mat mkk(img.get_img_config(),img.get_final_surface());   //把D3D转换为矩阵
-	                    
+	Mat mkk(img.get_img_config(),img.get_inital_surface());   //把D3D转换为矩阵
+	
 															 
 															 //
 						//Mat* pmk[3];
@@ -185,6 +193,12 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	//D3DCOLOR m = D3DCOLOR_ARGB(0, 100, 102, 103);
 	//int mm =(int)img.to_matrix_max(m);
 
+	test::show_d3dmat(img.get_inital_surface(), config.first, config.second);
+
+
+
+
+
 
 
     ZeroMemory( &msg,sizeof( msg ) );
@@ -197,6 +211,8 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
         }
         else
 		{
+			
+			img.show_initial_image(100,100);
 			const int constFps = 90;
 			float timeInOneFps = 1000.0f / constFps;    // 每秒60帧，则1帧就是约16毫秒
 			DWORD timeBegin = GetTickCount();
@@ -205,7 +221,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 		/*	d3d.BeginFrame();*/
 
-			//test.show_initial_image(100,100);
+			
 			
 		/*	for (int i = 0; i < 3; i++)
 			{

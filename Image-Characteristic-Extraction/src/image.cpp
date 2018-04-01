@@ -25,12 +25,16 @@ image::~image()
 
 void  image::show_initial_image()const
 {
+	main_d3d->BeginFrame();
 	_draw_image(100, 100, main_config.first, main_config.second, inital_image_surface, UP);
+	main_d3d->EndFrame();
 }
 
 void image::show_initial_image(const int & xoff, const int & yoff) const
 {
+	main_d3d->BeginFrame();
 	_draw_image(xoff, yoff,main_config.first, main_config.second,inital_image_surface, UP);
+	main_d3d->EndFrame();
 }
 
 void image::Grayscale(int way)
@@ -88,11 +92,16 @@ unsigned char image::to_matrix_avg(D3DCOLOR &color)
 }
 void image::show_final_image()const
 {
+	main_d3d->BeginFrame();
 	_draw_image(100, 100, main_config.first, main_config.second, final_image_surface, UP);
+	main_d3d->EndFrame();
 }
 void image::show_fourier_image() const
 {
+	main_d3d->BeginFrame();
 	_draw_image(300, 300, main_config.first, main_config.second,fourier_surface, UP);
+	main_d3d->EndFrame();
+
 }
 void  image::_draw_image(int xoff, int yoff, int width, int height, const D3DCOLOR *xsurf, DirectionState dec)const
 {
