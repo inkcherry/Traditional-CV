@@ -46,7 +46,93 @@ Mat::Mat(int width, int height) : width(width), height(height), need_delete_main
 	return nullptr;
 }
 
-void Mat:: _conver_to_mat(D3DCOLOR *surface)
+ void Mat::show_ascii_art()
+ {
+	 const char ascii_table[11] = "1.,:;ox%#@";
+	
+
+	 //char *buffer  = new char[ width*height+height+3];  //+height是 换行
+	 char *buffer  = new char[width+1];  //+height是 换行
+
+	 int ascii_table_len = strlen(ascii_table);
+	 if (main_mat == nullptr) 
+	{
+		int msgboxID = MessageBox(
+			NULL,
+
+			(LPCSTR)L"NULLPTR(mat)",
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+		return;
+	}
+
+	 string show_mat = "";
+	 FILE *fp = fopen("ascii_art.txt", "w");
+	 FILE *test = fopen("test.txt", "w");
+	 if (fp == nullptr||test== nullptr)
+	 {
+		 exit(1);
+	 }
+	
+
+	 int buffer_index = 0;
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				
+				int index = ascii_table_len - ((int)((main_mat[i][j]) / 26));
+				if (index >= 10)index = 9;
+				show_mat += ascii_table[index];             //show_mat 是messagebox试图打印的 ，但是有一些间距问题  暂时调整为输出txt
+				buffer[j] = ascii_table[index];
+				//buffer[buffer_index] = ascii_table[index];
+				//buffer_index++;
+
+				string a = std::to_string((int)main_mat[i][j]);
+				fputs(a.c_str(), test);
+				fputs(" ", test);
+
+			}
+		/*	buffer_index++;*/
+			
+			show_mat += "\n";
+			fputs(buffer, fp);
+			fputs("\n", fp);
+
+
+			fputs("\n", test);
+
+		}
+		
+		fclose(fp);
+		fclose(test);
+
+
+		int msgboxID = MessageBox(
+			NULL,
+
+			(LPCSTR)show_mat.c_str(),
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+
+	 if (main_mat == nullptr)
+	 {
+		 int msgboxID = MessageBox(
+			 NULL,
+
+			 (LPCSTR)L"NULLPTR(mat)",
+			 (LPCSTR)L"Account Details",
+			 MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		 );
+		 return;
+	 }
+
+
+ }
+
+ void Mat:: _conver_to_mat(D3DCOLOR *surface)
 {
 	int n_piexls = width*height;   //定义全部像素
 	//

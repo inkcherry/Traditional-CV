@@ -27,6 +27,9 @@ public:
 
 	inline void set_value(int &i, int &j, double &value) { main_mat[i][j] = value; }
 
+
+	void show_ascii_art();
+
 private:
 	bool  need_delete_mainmat;  //初始化方式标志，如果是外部矩阵指针直接初始化 析构Mat不会析构外部指针
 	void _conver_to_mat(D3DCOLOR *surface);

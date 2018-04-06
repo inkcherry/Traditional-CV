@@ -132,7 +132,8 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	/*unit::test_laplace();*/
 
 	Mat mkk(img.get_img_config(),img.get_inital_surface());   //把D3D转换为矩阵
-	
+	//mkk.show_main_mat();
+	mkk.show_ascii_art();
 															 
 															 //
 						//Mat* pmk[3];
@@ -193,7 +194,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	//D3DCOLOR m = D3DCOLOR_ARGB(0, 100, 102, 103);
 	//int mm =(int)img.to_matrix_max(m);
 
-	test::show_d3dmat(img.get_inital_surface(), config.first, config.second);
+	//test::show_d3dmat(img.get_inital_surface(), config.first, config.second);
 
 
 
