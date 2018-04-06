@@ -99,7 +99,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 	img_config config;
 	D3DCOLOR surface[30000];
-	LoadBmp(config, surface, "6.bmp");
+	LoadBmp(config, surface, "7.bmp");
 
 
 

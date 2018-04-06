@@ -45,6 +45,7 @@ void LoadBmp(img_config&config, D3DCOLOR*surfacee,std::string src)  //32н╩bmpм╪о
 		int nBytesPerRow = infoHeader.width * 3;
 		int nPaddingByresPerRow = 4 - (nBytesPerRow % 4);
 		for (int y = infoHeader.height - 1; y >= 0; y--)       //bmpнд╪Чйгвт╣воРио╢Ф╢╒оЯкьпео╒   {  
+		{
 			for (int x = 0; x < infoHeader.width; x++)
 			{
 				Piexl24 pixel;                         //Piexl24н╙ 3╦Жunsigned char╠Да©╣д╫А╧╧лЕ  
@@ -52,7 +53,8 @@ void LoadBmp(img_config&config, D3DCOLOR*surfacee,std::string src)  //32н╩bmpм╪о
 				//surface[x+y*infoHeader.width] = D3DCOLOR_XRGB(pixel.red, pixel.green, pixel.blue);  
 				surfacee[x + y*infoHeader.width] = D3DCOLOR_XRGB(pixel.red, pixel.green, pixel.blue);
 			}
-		fseek(bmpFile, nPaddingByresPerRow, SEEK_CUR);
+			fseek(bmpFile, nPaddingByresPerRow, SEEK_CUR);
+		}
 	}
 	fclose(bmpFile);
 }
