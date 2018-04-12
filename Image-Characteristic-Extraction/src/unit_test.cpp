@@ -4,7 +4,6 @@
 #include "morph.h"
 #include  "transform.h"
 
-
 using namespace std;
 	double** test::get_mat() {
 		double arr[9] = {
@@ -165,6 +164,40 @@ using namespace std;
 		after_morphop_mat3->show_main_mat();*/
 		after_morphop_mat4->show_main_mat();
 	}
+
+	image** unit::test_transform(Mat* &insert_mat)
+	{
+
+		typedef shared_ptr<D3DCOLOR>  sh_D3D;
+
+		insert_mat->show_main_mat();
+
+
+		transform *ts = new transform(insert_mat);
+
+		Mat* res_mat[2];
+		sh_D3D sh_res_mat[2];
+		image** res_img = new image*[2];
+
+
+		res_mat[0] = ts->sobel();
+		res_mat[1] = ts->laplacian();
+
+
+
+
+
+		res_mat[0]->show_main_mat();
+
+	   sh_res_mat[0]=res_mat[0]->conver_to_d3dmat();
+	   sh_res_mat[1] = res_mat[1]->conver_to_d3dmat();
+
+	   res_img[0] = new image(*gobal_d3d,sh_res_mat[0].get(), insert_mat->get_img_config());
+	   res_img[1] = new image(*gobal_d3d, sh_res_mat[0].get(), insert_mat->get_img_config());
+	   res_img[0]->show_digital_mat();
+
+	   return  res_img;
+}
 
 
 

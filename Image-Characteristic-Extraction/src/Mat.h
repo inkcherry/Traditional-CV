@@ -26,8 +26,7 @@ public:
 	shared_ptr<D3DCOLOR> conver_to_d3dmat();  //把mat还原为d3dcolor数组
 
 	inline void set_value(int &i, int &j, double &value) { main_mat[i][j] = value; }
-
-
+	
 	void show_ascii_art();
 
 private:

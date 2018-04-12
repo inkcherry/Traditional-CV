@@ -23,6 +23,7 @@ public:
 	void show_initial_image(const int &xoff,const int &yoff)const;
 	void show_final_image()const;	//处理后的图像
 	void show_fourier_image()const;
+	void show_digital_mat()const;
 	
 	//....
 	//treat function

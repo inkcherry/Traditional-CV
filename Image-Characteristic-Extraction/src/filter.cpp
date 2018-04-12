@@ -342,7 +342,7 @@ Mat * filter::custom_kernel_op(kernel *& custom_kernel)
 {
 	
 	kernel_mat = custom_kernel;
-	Mat *res_mat_ = new Mat(convolution(), custom_kernel->main_config.first, custom_kernel->main_config.second);
+	Mat *res_mat_ = new Mat(convolution(),this->width, this->height);
 	return res_mat_;
 	return nullptr;
 }

@@ -11,6 +11,8 @@
 #include "filter.h"
 #include "morph.h"
 static KeyboardServer kServ;
+D3DGraphics* gobal_d3d;
+
 
 LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
@@ -99,12 +101,17 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 	img_config config;
 	D3DCOLOR surface[30000];
-	LoadBmp(config, surface, "7.bmp");
+	LoadBmp(config, surface, "9s.bmp");
 
 
 
 
 	D3DGraphics d3d(hWnd);           //初始化D3DGraphics对象
+	gobal_d3d = &d3d;                //unit_test的d3d指针
+
+
+
+	
 
 	image img(d3d, surface, config);
 	/*test::show_d3dmat(surface, 55, 29);*/
@@ -131,9 +138,14 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 	/*unit::test_sobel();*/
 	/*unit::test_laplace();*/
 
-	Mat mkk(img.get_img_config(),img.get_inital_surface());   //把D3D转换为矩阵
+	Mat *mkk = new Mat(img.get_img_config(),img.get_inital_surface());   //把D3D转换为矩阵
+
+
+
+
+
 	//mkk.show_main_mat();
-	mkk.show_ascii_art();
+	//mkk.show_ascii_art();
 															 
 															 //
 						//Mat* pmk[3];
@@ -198,7 +210,8 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 
-
+	image** res_img ;
+	res_img=unit::test_transform(mkk);
 
 
 
@@ -213,7 +226,6 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
         else
 		{
 			
-			img.show_initial_image(100,100);
 			const int constFps = 90;
 			float timeInOneFps = 1000.0f / constFps;    // 每秒60帧，则1帧就是约16毫秒
 			DWORD timeBegin = GetTickCount();
@@ -222,7 +234,8 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 		/*	d3d.BeginFrame();*/
 
-			
+			res_img[0]->show_initial_image(100, 100);
+			res_img[1]->show_initial_image(300, 300);
 			
 		/*	for (int i = 0; i < 3; i++)
 			{

@@ -103,6 +103,46 @@ void image::show_fourier_image() const
 	main_d3d->EndFrame();
 
 }
+void image::show_digital_mat() const
+{
+	if (inital_image_surface == nullptr)
+	{
+		int msgboxID = MessageBox(
+			NULL,
+
+			(LPCSTR)L"NULLPTR(mat)",
+			(LPCSTR)L"Account Details",
+			MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+		);
+		return;
+	}
+
+	string show_mat = "";
+	int width = main_config.first;
+	int height = main_config.second;
+
+	for (int i = 0; i < main_config.first; i++)
+	{
+		for (int j = 0; j < main_config.second; j++)
+		{
+
+
+			show_mat += std::to_string(inital_image_surface[i*width + j]) + " ";
+		}
+		show_mat += "\n";
+
+	}
+	int msgboxID = MessageBox(
+		NULL,
+
+		(LPCSTR)show_mat.c_str(),
+		(LPCSTR)L"Account Details",
+		MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2
+	);
+
+}
+
+
 void  image::_draw_image(int xoff, int yoff, int width, int height, const D3DCOLOR *xsurf, DirectionState dec)const
 {
 	int AllPixel = (width)*(height);

@@ -18,7 +18,7 @@ Mat * transform::op(pair<kernel*, kernel*>kernel_,bool type)
 	//gx_res->show_main_mat();
 	//gy_res->show_main_mat();
 
-	res_mat->show_main_mat();
+	//res_mat->show_main_mat();
 
 	if (type = true)   //使用欧式距离内个公式
 	{
@@ -42,7 +42,7 @@ Mat * transform::op(pair<kernel*, kernel*>kernel_,bool type)
 			}
 	}
 
-	res_mat->show_main_mat();
+	//res_mat->show_main_mat();
 
 
 	delete kernel_.first;
@@ -82,7 +82,7 @@ Mat * transform::laplacian(int mask_type, double scale)
 		}
 	delete sharpen_mat;
 	delete temp_filter;
-	res_mat->show_main_mat();
+	//res_mat->show_main_mat();
 	return res_mat;
 	return nullptr;
 }
@@ -94,20 +94,22 @@ Mat* transform:: sobel(bool type )   //1为complex
 
 	Mat *res_mat = new Mat(width,height);
 
+
+	//this->main_mat->show_main_mat();
+
 	Mat *gx_res = temp_filter->custom_kernel_op(sobel_kernel.first);  //gx
 	Mat *gy_res = temp_filter->custom_kernel_op(sobel_kernel.second);
-
 
 
 	//gx_res->show_main_mat();
 	//gy_res->show_main_mat();
 
-	res_mat->show_main_mat();
+	//res_mat->show_main_mat();
 
 	if (type = true)   //使用欧式距离内个公式
 	{
-		for(int i=0;i<width;i++)
-			for (int j = 0; j < height; j++)
+		for(int i=0;i<height;i++)
+			for (int j = 0; j < width; j++)
 			{
 				double cur_gx = (*gx_res)[i][j];
 				double cur_gy = (*gy_res)[i][j];
@@ -117,8 +119,8 @@ Mat* transform:: sobel(bool type )   //1为complex
 
 	if (type = false)
 	{
-		for (int i = 0; i < width; i++)
-			for (int j = 0; j < height; j++)
+		for (int i = 0; i < height; i++)
+			for (int j = 0; j < width; j++)
 			{
 				double cur_gx = (*gx_res)[i][j];
 				double cur_gy = (*gy_res)[i][j];
@@ -126,12 +128,14 @@ Mat* transform:: sobel(bool type )   //1为complex
 			}
 	}
 
-	res_mat->show_main_mat();
+	//res_mat->show_main_mat();
 
 
 	delete sobel_kernel.first;
 	delete sobel_kernel.second;
 	delete temp_filter;
+
+	//res_mat->show_main_mat();
 	return res_mat;
 	return nullptr;
 }
@@ -152,7 +156,7 @@ Mat * transform::laplacian()
 		}
 	delete sharpen_mat;
 	delete temp_filter;
-	res_mat->show_main_mat();
+	//res_mat->show_main_mat();
 	return res_mat;
 	return nullptr;
 }
@@ -256,7 +260,7 @@ kernel * transform::get_laplacian(int mask_type)
 		}
 	}
 	kernel *gxy_kernel = new kernel(gxy, 3, 3);
-	gxy_kernel->show_kernel();
+	//gxy_kernel->show_kernel();
 	return gxy_kernel;
 	return nullptr;
 }

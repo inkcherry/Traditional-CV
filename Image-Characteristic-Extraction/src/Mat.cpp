@@ -48,7 +48,7 @@ Mat::Mat(int width, int height) : width(width), height(height), need_delete_main
 
  void Mat::show_ascii_art()
  {
-	 const char ascii_table[11] = "1.,:;ox%#@";
+	 const char ascii_table[11] = " .,:;ox%#@";
 	
 
 	 //char *buffer  = new char[ width*height+height+3];  //+height是 换行
@@ -82,8 +82,8 @@ Mat::Mat(int width, int height) : width(width), height(height), need_delete_main
 			for (int j = 0; j < width; j++)
 			{
 				
-				int index = ascii_table_len - ((int)((main_mat[i][j]) / 26));
-				if (index >= 10)index = 9;
+				int index = ascii_table_len - ((int)((main_mat[i][j]) / 29))-2;
+				/*if (index >= 10)index = 9;*/
 				show_mat += ascii_table[index];             //show_mat 是messagebox试图打印的 ，但是有一些间距问题  暂时调整为输出txt
 				buffer[j] = ascii_table[index];
 				//buffer[buffer_index] = ascii_table[index];

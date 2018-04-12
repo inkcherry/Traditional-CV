@@ -43,7 +43,7 @@ void LoadBmp(img_config&config, D3DCOLOR*surfacee,std::string src)  //32н╩bmpм╪о
 	else if (infoHeader.bits == 24)
 	{
 		int nBytesPerRow = infoHeader.width * 3;
-		int nPaddingByresPerRow = 4 - (nBytesPerRow % 4);
+		int nPaddingByresPerRow = (4 - (nBytesPerRow % 4))%4;   
 		for (int y = infoHeader.height - 1; y >= 0; y--)       //bmpнд╪Чйгвт╣воРио╢Ф╢╒оЯкьпео╒   {  
 		{
 			for (int x = 0; x < infoHeader.width; x++)
