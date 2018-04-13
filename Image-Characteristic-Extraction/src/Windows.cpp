@@ -211,8 +211,18 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 	image** res_img ;
+
 	res_img=unit::test_transform(mkk);
 
+	//调试内容
+	//int a = (int)res_img[0];
+	//int b = (int)res_img[1];
+	//res_img[0]->show_digital_mat();
+
+
+	//调试内容
+	/*Mat test123(res_img[0]->get_img_config(),res_img[0]->get_inital_surface());
+	test123.show_main_mat();*/
 
 
     ZeroMemory( &msg,sizeof( msg ) );

@@ -25,7 +25,7 @@ Mat::Mat(int width, int height) : width(width), height(height), need_delete_main
 		}
 	}
 	int b = main_mat[2][2];
-	this->show_main_mat();
+	//this->show_main_mat();
 	
 }
 

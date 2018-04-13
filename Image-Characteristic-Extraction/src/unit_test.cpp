@@ -170,7 +170,7 @@ using namespace std;
 
 		typedef shared_ptr<D3DCOLOR>  sh_D3D;
 
-		insert_mat->show_main_mat();
+		//insert_mat->show_main_mat();
 
 
 		transform *ts = new transform(insert_mat);
@@ -180,6 +180,8 @@ using namespace std;
 		image** res_img = new image*[2];
 
 
+
+		
 		res_mat[0] = ts->sobel();
 		res_mat[1] = ts->laplacian();
 
@@ -187,14 +189,24 @@ using namespace std;
 
 
 
-		res_mat[0]->show_main_mat();
+		//res_mat[0]->show_main_mat();
 
 	   sh_res_mat[0]=res_mat[0]->conver_to_d3dmat();
 	   sh_res_mat[1] = res_mat[1]->conver_to_d3dmat();
 
 	   res_img[0] = new image(*gobal_d3d,sh_res_mat[0].get(), insert_mat->get_img_config());
 	   res_img[1] = new image(*gobal_d3d, sh_res_mat[0].get(), insert_mat->get_img_config());
-	   res_img[0]->show_digital_mat();
+
+	   //调试内容
+	   //int a = (int)res_img[0];
+	   //int b = (int)res_img[1];
+
+	   //res_img[0]->show_digital_mat();
+	   //res_img[0]->show_digital_mat();
+
+	   //调试内容
+	 /*  Mat test123(res_img[0]->get_img_config(), res_img[0]->get_inital_surface());
+	   test123.show_main_mat();*/
 
 	   return  res_img;
 }
