@@ -221,8 +221,8 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 	//调试内容
-	/*Mat test123(res_img[0]->get_img_config(),res_img[0]->get_inital_surface());
-	test123.show_main_mat();*/
+		Mat test123(res_img[0]->get_img_config(), res_img[0]->get_inital_surface());
+	test123.show_main_mat();
 
 
     ZeroMemory( &msg,sizeof( msg ) );
