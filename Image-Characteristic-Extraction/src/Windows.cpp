@@ -211,8 +211,9 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 	image** res_img ;
+	image** after_threshold_mat;
 
-	res_img=unit::test_transform(mkk);
+	res_img=unit::test_treshold(mkk);
 
 	//调试内容
 	//int a = (int)res_img[0];
@@ -221,8 +222,11 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 	//调试内容
-		Mat test123(res_img[0]->get_img_config(), res_img[0]->get_inital_surface());
-	test123.show_main_mat();
+	Mat test123(res_img[0]->get_img_config(), res_img[0]->get_inital_surface());
+
+
+
+	/*test123.show_main_mat();*/
 
 
     ZeroMemory( &msg,sizeof( msg ) );
@@ -242,7 +246,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 
-		/*	d3d.BeginFrame();*/
+			d3d.BeginFrame();
 
 			res_img[0]->show_initial_image(100, 100);
 			res_img[1]->show_initial_image(300, 300);
@@ -253,7 +257,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 			}
 			*/
 			//img.show_fourier_image();
-		/*	d3d.EndFrame();*/
+			d3d.EndFrame();
 
 
 

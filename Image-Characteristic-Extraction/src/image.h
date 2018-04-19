@@ -19,8 +19,13 @@ public:
 	image(D3DGraphics &d3d_,D3DCOLOR *image_surface,const img_config &img_onfig) ;   
 	image(D3DCOLOR * image_surface_, const img_config & img_config);
 	~image();
+	void s_show_initial_image()const;  //处理前的图像
+	void s_show_initial_image(const int &xoff,const int &yoff)const;    
+
 	void show_initial_image()const;  //处理前的图像
-	void show_initial_image(const int &xoff,const int &yoff)const;
+	void show_initial_image(const int &xoff, const int &yoff)const;
+
+
 	void show_final_image()const;	//处理后的图像
 	void show_fourier_image()const;
 	void show_digital_mat()const;

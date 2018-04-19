@@ -205,8 +205,8 @@ using namespace std;
 	   //res_img[0]->show_digital_mat();
 
 	   //调试内容
-	   Mat test123(res_img[0]->get_img_config(), res_img[0]->get_inital_surface());
-	   test123.show_main_mat();
+	  /* Mat test123(res_img[0]->get_img_config(), res_img[0]->get_inital_surface());
+	   test123.show_main_mat();*/
 
 	   return  res_img;
 }
@@ -223,6 +223,40 @@ using namespace std;
 		test::show_mat(after_conv_mat, 3, 3);
 		return after_conv_mat;
 	}
+	image ** unit::test_treshold(Mat *& insert_mat)
+	{
+		typedef shared_ptr<D3DCOLOR>  sh_D3D;
+		sh_D3D* sh_res_mat = new sh_D3D[2];  //由于布局不够合理，智能指针和普通指针有些混用，此处暂时需使用智能指针的指针类型，防止自动析构，以便于调试
+											 //insert_mat->show_main_mat();
+
+
+		transform *ts = new transform(insert_mat);
+
+		Mat* res_mat[2];
+		Mat* after_treshold_mat[2];  //阈值化处理之后的矩阵
+		image** res_img = new image*[2];
+
+
+		res_mat[0] = ts->sobel();
+		res_mat[1] = ts->laplacian();
+		transform a_t_r_m_1 =  transform(res_mat[0]);			
+		transform a_t_r_m_2 = transform(res_mat[1]);
+
+
+		after_treshold_mat[0] = a_t_r_m_1.treshold(100);  //阈值处理
+		after_treshold_mat[1] = a_t_r_m_2.treshold(100);
+
+		sh_res_mat[0] = after_treshold_mat[0]->conver_to_d3dmat();
+		sh_res_mat[1] = after_treshold_mat[1]->conver_to_d3dmat();
+
+		res_img[0] = new image(*gobal_d3d, sh_res_mat[0].get(), insert_mat->get_img_config());
+		res_img[1] = new image(*gobal_d3d, sh_res_mat[1].get(), insert_mat->get_img_config());
+
+
+		return res_img;
+		return nullptr;
+	}
+
 	void unit::test_sobel()
 	{
 		double **mat = test::get_mat();

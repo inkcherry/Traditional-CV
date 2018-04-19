@@ -170,11 +170,17 @@ Mat * transform::treshold(int tresh)  //自定义阈值二值化
 				(*res_mat)[i][j] = 255;
 			else 
 			{
-				*res_mat[i][j] = 0;
+				(*res_mat)[i][j] = 0;
 			}
 		}
+
+	return res_mat;
+
 	return nullptr;
 }
+
+
+
 Mat * transform::scharr()
 {
 	return op(get_op(SCHARR_OP),false);
