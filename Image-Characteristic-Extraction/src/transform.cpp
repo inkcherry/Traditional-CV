@@ -54,6 +54,55 @@ Mat * transform::op(pair<kernel*, kernel*>kernel_,bool type)
 	return nullptr;
 }
 
+Mat * transform::hough_transform(double theta_length_= 360 , double r_length_, int tresh_ = 100,bool is_binary_mat = 1)
+{
+
+	const int theta_length = theta_length_; 
+	const int r_length=r_length_;      //极坐标的角和半径共线统计数组
+	const int tresh = tresh_;
+	Mat *temp_mat;
+
+	unsigned int **count_arr = new unsigned int *[theta_length];  //初始化统计数组[theta_length][r_length]
+	for (int i = 0; i < theta_length; i++)
+	{
+		count_arr[i] = new unsigned int[r_length];
+		
+		for (int j = 0; j < r_length; j++)
+			count_arr[i][j] = 0;
+	}
+
+
+
+	if (!is_binary_mat)//需要先进行二值处理
+	{
+		temp_mat = new Mat(width, height);
+		for (int i = 0; i < height; i++)
+			for (int j = 0; j < width; j++)
+			{
+				if ((*main_mat)[i][j] > tresh)
+					(*temp_mat)[i][j] = 255;
+				else
+				{
+					(*temp_mat)[i][j] = 0;
+				}
+			}
+	}
+	else  temp_mat = main_mat;
+
+	  for(int i=0;i<width;i++)
+		  for (int j = 0; j < height; j++)
+		  {
+			  for (int theta = 0; theta < theta_length; theta++)
+			  {
+
+			  }
+		  }
+
+
+
+	return nullptr;
+}
+
 transform::transform(Mat* &main_mat_r):main_mat(main_mat_r),
 width(main_mat_r->get_img_config().first),
 height(main_mat_r->get_img_config().second)

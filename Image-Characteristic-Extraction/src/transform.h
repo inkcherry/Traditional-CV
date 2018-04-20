@@ -21,6 +21,11 @@ public:
 	Mat* op(pair<kernel*,kernel*>kernel_,bool type);  //算子运算
 
 
+
+	Mat* hough_transform(double theta_length_ ,double r_length_,int tresh , bool is_binary_mat);             //霍夫变换 此行为需要先二值化  默认为已经二值化
+
+
+
 	explicit transform(Mat* &main_mat_r);
 	~transform();
 	int width, height;
