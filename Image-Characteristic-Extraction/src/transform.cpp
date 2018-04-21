@@ -34,12 +34,12 @@ Mat * transform::op(pair<kernel*, kernel*>kernel_,bool type)
 	if (type = false)
 	{
 		for (int i = 0; i < width; i++)
-			for (int j = 0; j < height; j++)
-			{
-				double cur_gx = (*gx_res)[i][j];
-				double cur_gy = (*gy_res)[i][j];
-				(*res_mat)[i][j] = abs(cur_gx) + abs(cur_gy);
-			}
+for (int j = 0; j < height; j++)
+{
+	double cur_gx = (*gx_res)[i][j];
+	double cur_gy = (*gy_res)[i][j];
+	(*res_mat)[i][j] = abs(cur_gx) + abs(cur_gy);
+}
 	}
 
 	//res_mat->show_main_mat();
@@ -54,19 +54,30 @@ Mat * transform::op(pair<kernel*, kernel*>kernel_,bool type)
 	return nullptr;
 }
 
-Mat * transform::hough_transform(double theta_length_= 360 , double r_length_, int tresh_ = 100,bool is_binary_mat = 1)
+Mat * transform::hough_transform(double theta_length_, double rho, int line_tresh, int tresh_, bool is_binary_mat_)
 {
+	//确定累加数组大小
+	const int theta_length = theta_length_;
+	const int r_length = sqrt(2.0)*(height>width?height:width);      //极坐标的角和半径共线统计数组
 
-	const int theta_length = theta_length_; 
-	const int r_length=r_length_;      //极坐标的角和半径共线统计数组
+	const bool is_binary_mat = is_binary_mat_;
+
+
 	const int tresh = tresh_;
+	const double transform_radian = PI / 180;
 	Mat *temp_mat;
+
+	int center_x = width / 2;
+	int center_y = height / 2;
+
+
+
 
 	unsigned int **count_arr = new unsigned int *[theta_length];  //初始化统计数组[theta_length][r_length]
 	for (int i = 0; i < theta_length; i++)
 	{
 		count_arr[i] = new unsigned int[r_length];
-		
+
 		for (int j = 0; j < r_length; j++)
 			count_arr[i][j] = 0;
 	}
@@ -87,17 +98,60 @@ Mat * transform::hough_transform(double theta_length_= 360 , double r_length_, i
 				}
 			}
 	}
-	else  temp_mat = main_mat;
 
-	  for(int i=0;i<width;i++)
-		  for (int j = 0; j < height; j++)
-		  {
-			  for (int theta = 0; theta < theta_length; theta++)
-			  {
+	else  temp_mat = main_mat;
+	for (int theta = 0; theta < theta_length; theta++)
+	{
+		double temp_radian = theta*transform_radian;
+		double cos_var = cos(temp_radian);
+		double sin_var = sin(temp_radian);
+
+		for (int i = 0; i < height; i++)  //对应图像y
+			for (int j = 0; j < width; j++)//对应图像x
+			{
+				if ((*temp_mat)[i][j] == 255)//有值
+				{
+					double temp_r = cos_var*j + sin_var*i;
+					int int_r = round(temp_r);
+					count_arr[theta][int_r]++;
+				}
+				/*  double temp_r = (i*sin_var + j*cos_var);
+				  if (temp_r < r_length&temp_r>0)
+					  count_arr[theta_length][r_length];*/
+			}
+	}
+
+
+	vector<pair<int, int>, pair<int, int>> lines;
+
+	for (int i = 0; i < theta_length; i++)
+	{
+		for (int j = 0; j < r_length; j++)
+		{
+			if (count_arr[i][j] > line_tresh)
+			{
+				int ma_value = count_arr[i][j];
+
+				for (int theta_off = rho*-1; theta_off <= rho; theta_off++)
+					for (int r_off = rho*-1; r_off <= rho, r_off++)
+					{
+						if ((theta_off + i > 0 && theta_off + i < theta_length) && ((r_off + j > 0) && (r_off + j < r_length)))  //边界检测
+						{
+							if (count_arr[theta_off + i][r_off + j] > ma_value)
+							{
+								ma_value = count_arr[theta_off + i][r_off + j];
+									r_off = rho + 1;
+									theta_off = rho + 1;
+							}
+						}
+					}
+
+
 
 			  }
 		  }
 
+	  }
 
 
 	return nullptr;
