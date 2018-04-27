@@ -54,7 +54,7 @@ for (int j = 0; j < height; j++)
 	return nullptr;
 }
 
-Mat * transform::hough_transform(double theta_length_, double rho, int line_tresh, int tresh_, bool is_binary_mat_)
+Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_)
 {
 	//确定累加数组大小
 	const int theta_length = 180;
@@ -62,8 +62,8 @@ Mat * transform::hough_transform(double theta_length_, double rho, int line_tres
 
 	const bool is_binary_mat = is_binary_mat_;
 
-
-	const int tresh = tresh_;
+	const int tresh = 100;
+	
 	const double transform_radian = PI / 180;
 
 
@@ -166,32 +166,56 @@ Mat * transform::hough_transform(double theta_length_, double rho, int line_tres
 				
 				if (i > 45 && i < 135) //用竖线|标志
 				{
-					
 					x0 = 0;
-					y0 = (double)(j - r_length / 2) - ((x0 - width / 2)*cos(temp_radian)) / sin(temp_radian) + (height / 2);
-				    x1 = width - 0;
-					y1 = (double)(j - r_length / 2) - ((x0 - width / 2)*cos(temp_radian)) / sin(temp_radian) + (height / 2);
+					y0 = ((double)(j - r_length / 2) - ((x0 - width / 2)*cos(temp_radian))) / sin(temp_radian) + (height / 2);
+				    x1 = width - 1;
+					y1 = ((double)(j - r_length / 2) - ((x0 - width / 2)*cos(temp_radian)) )/ sin(temp_radian) + (height / 2);
 				}
 				else                 //用横线标识
 				{
 					y0 = 0;
-				    x0 = (double)(j - r_length / 2) - ((y0 - height / 2)*sin(temp_radian)) / cos(temp_radian) + (width / 2);
-					y1 = height - 0;
-					x1 = (double(j - r_length / 2)) - ((y1 - height / 2)*sin(temp_radian)) / cos(temp_radian) + (width / 2);
+				    x0 =((double)(j - r_length / 2) - ((y0 - height / 2)*sin(temp_radian)) )/ cos(temp_radian) + (width / 2);
+					if (x0 < 0)
+					{
+						int a = 0;
+					}
+					y1 = height - 1;
+					x1 = ((double(j - r_length / 2)) - ((y1 - height / 2)*sin(temp_radian)) )/ cos(temp_radian) + (width / 2);
 				}
-
+				if(x0<0||y0<0||x1<0||y1<0||x0>=width||x1>=width||y0>=height||y1>=height)
+					continue;
 				lines.push_back(make_pair(make_pair(x0, y0), make_pair(x1, y1)));
 
 			  }
 		  }
 
 	  }
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+			(*res_mat)[i][j] = 0;
+	}
 
 
     for(auto line:lines)
 	{
-		(*res_mat)[line.first.first][line.first.second] = 155;
-		(*res_mat)[line.second.first][line.second.first] = 155;
+
+		int x0 = line.first.first;
+		int y0 = line.first.second;
+
+		int x1 = line.second.first;
+		int y1 = line.second.second;
+
+		double tan = (y1 - y0) / (x1 - x0);
+
+		for (int i = x0; i < width; i++)  //暂时实现一个简单的连线函数 明天写~
+		{
+
+		}
+
+
+		(*res_mat)[line.first.second][line.first.first] = 155;
+		(*res_mat)[line.second.second][line.second.first] = 155;
 	}
 	return res_mat;
 	return nullptr;

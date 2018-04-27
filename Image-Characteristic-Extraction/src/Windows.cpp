@@ -101,7 +101,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 	img_config config;
 	D3DCOLOR surface[30000];
-	LoadBmp(config, surface, "9s.bmp");
+	LoadBmp(config, surface, "line.bmp");
 
 
 
@@ -210,19 +210,18 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 
-	image** res_img ;
-	image** after_threshold_mat;
+	image* res_img ;
+	//image** after_threshold_mat;
 
-	res_img=unit::test_treshold(mkk);
+	res_img=unit::test_hough(mkk);
 
 	//调试内容
 	//int a = (int)res_img[0];
 	//int b = (int)res_img[1];
 	//res_img[0]->show_digital_mat();
 
-
 	//调试内容
-	Mat test123(res_img[0]->get_img_config(), res_img[0]->get_inital_surface());
+	//Mat test123(res_img[0]->get_img_config(), res_img[0]->get_inital_surface());
 
 
 
@@ -247,9 +246,9 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 
 			d3d.BeginFrame();
-
-			res_img[0]->show_initial_image(100, 100);
-			res_img[1]->show_initial_image(300, 300);
+			img.s_show_initial_image(300, 300);
+			res_img->show_initial_image(100, 100);
+		
 			
 		/*	for (int i = 0; i < 3; i++)
 			{

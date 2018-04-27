@@ -25,16 +25,12 @@ image::~image()
 
 void  image::s_show_initial_image()const
 {
-	main_d3d->BeginFrame();
 	_draw_image(100, 100, main_config.first, main_config.second, inital_image_surface, UP);
-	main_d3d->EndFrame();
 }
 
 void image::s_show_initial_image(const int & xoff, const int & yoff) const
 {
-	main_d3d->BeginFrame();
 	_draw_image(xoff, yoff,main_config.first, main_config.second,inital_image_surface, UP);
-	main_d3d->EndFrame();
 }
 
 

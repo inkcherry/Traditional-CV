@@ -24,6 +24,7 @@ namespace unit {
 	void test_sobel();
 	void test_laplace();
 	double** test_conv();
+	image* test_hough(Mat* &insert_mat);
 	image **test_treshold(Mat* &insert_mat);
 	
 }
