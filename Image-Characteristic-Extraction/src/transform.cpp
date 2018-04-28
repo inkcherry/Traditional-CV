@@ -59,6 +59,7 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 	//确定累加数组大小
 	const int theta_length = 180;
 	const int r_length = sqrt(2.0)*(height>width?height:width);      //极坐标的角和半径共线统计数组
+	const double hough_roff = (double)r_length / 2.0;
 
 	const bool is_binary_mat = is_binary_mat_;
 
@@ -77,6 +78,72 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 
 
 	unsigned int **count_arr = new unsigned int *[theta_length];  //初始化统计数组[theta_length][r_length]
+
+	std::function<void(Mat* &,int x0,int y0,int x1,int y1)> set_line = [&](Mat* &line_mat, int x0, int y0, int x1, int y1) {
+
+
+		
+		if (x0 > x1) { swap(x0, x1); swap(y0, y1); }  //x0<=x1
+
+
+		if (x0 > 150)
+		{
+			int a = 0;
+		}
+
+		double temp_tan1;
+		if (x1 != x0)
+		{
+			temp_tan1 = (double)(y1 - y0) / (double)(x1 - x0);
+
+
+
+			for (int j = x0; j < x1; j++)
+			{
+				int reset_y = round(j *temp_tan1 + y0);
+
+				if (reset_y<0 || reset_y>height)
+					continue;
+				(*line_mat)[reset_y][j] = 0;
+			}
+		}
+		
+
+
+
+		if (y0 > y1) { swap(x0, x1); swap(y0, y1); }  //x0<=y1
+
+		double temp_tan2;
+		if (y1 != y0)
+		{
+			temp_tan2 = (double)(x1 - x0) / (double)(y1 - y0);
+
+			for (int i = y0; i < y1; i++)
+			{
+
+				int reset_x = round(i*temp_tan2 + x0);
+
+				if (reset_x<0 || reset_x>width)
+					continue;
+				(*line_mat)[i][reset_x] = 0;
+			}
+		}
+		
+
+
+
+
+		/*for (int i = 0; i < height; i++)
+		{
+			
+
+		}*/
+		
+
+	};
+
+
+
 	for (int i = 0; i < theta_length; i++)
 	{
 		count_arr[i] = new unsigned int[r_length];
@@ -112,26 +179,49 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 
 	};
 
-	for (int theta = 0; theta < theta_length; theta++)
-	{
-		double temp_radian = theta*transform_radian;
-		double cos_var = cos(temp_radian);
-		double sin_var = sin(temp_radian);
+	//for (int theta = 0; theta < theta_length; theta++)
+	//{
+	//	double temp_radian = theta*transform_radian;
+	//	double cos_var = cos(temp_radian);
+	//	double sin_var = sin(temp_radian);
+
+	//	for (int i = 0; i < height; i++)  //对应图像y
+	//		for (int j = 0; j < width; j++)//对应图像x
+	//		{
+	//			if ((*res_mat)[i][j] == 255)//有值
+	//			{
+	//				double temp_r = cos_var*j + sin_var*i;
+	//				int int_r = round(temp_r);
+	//				count_arr[theta][int_r]++;
+	//			}
+	//			/*  double temp_r = (i*sin_var + j*cos_var);
+	//			  if (temp_r < r_length&temp_r>0)
+	//				  count_arr[theta_length][r_length];*/
+	//		}
+	//}
+
+
 
 		for (int i = 0; i < height; i++)  //对应图像y
 			for (int j = 0; j < width; j++)//对应图像x
 			{
 				if ((*res_mat)[i][j] == 255)//有值
 				{
-					double temp_r = cos_var*j + sin_var*i;
-					int int_r = round(temp_r);
-					count_arr[theta][int_r]++;
+					for (int theta = 0; theta < theta_length; theta++)
+					{
+							double temp_radian = theta*transform_radian;
+							double cos_var = cos(temp_radian);
+							double sin_var = sin(temp_radian);
+							double temp_r = (j - center_x)*cos_var + (i - center_y)*sin_var;
+						    int int_r = round(temp_r)+hough_roff;
+						count_arr[theta][int_r]++;
+					}
 				}
 				/*  double temp_r = (i*sin_var + j*cos_var);
-				  if (temp_r < r_length&temp_r>0)
-					  count_arr[theta_length][r_length];*/
+				if (temp_r < r_length&temp_r>0)
+				count_arr[theta_length][r_length];*/
 			}
-	}
+	
 
 	vector<pair<pair<int, int>, pair<int, int>>> lines;
 
@@ -139,7 +229,7 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 	{
 		for (int j = 0; j < r_length; j++)
 		{
-			if (count_arr[i][j] > line_tresh)
+			if (count_arr[i][j] >=line_tresh)
 			{
 				int ma_value = count_arr[i][j];
 
@@ -167,20 +257,21 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 				if (i > 45 && i < 135) //用竖线|标志
 				{
 					x0 = 0;
-					y0 = ((double)(j - r_length / 2) - ((x0 - width / 2)*cos(temp_radian))) / sin(temp_radian) + (height / 2);
+					y0 = ((double)(j - (r_length / 2)) - ((x0 -( width / 2))*cos(temp_radian))) / sin(temp_radian) + (height / 2);
+
 				    x1 = width - 1;
-					y1 = ((double)(j - r_length / 2) - ((x0 - width / 2)*cos(temp_radian)) )/ sin(temp_radian) + (height / 2);
+					y1 = ((double)(j - (r_length / 2)) - ((x0 - (width / 2))*cos(temp_radian)) )/ sin(temp_radian) + (height / 2);
 				}
 				else                 //用横线标识
 				{
 					y0 = 0;
-				    x0 =((double)(j - r_length / 2) - ((y0 - height / 2)*sin(temp_radian)) )/ cos(temp_radian) + (width / 2);
+				    x0 =((double)(j - (r_length / 2)) - ((y0 - (height / 2))*sin(temp_radian)) )/ cos(temp_radian) + (width / 2);
 					if (x0 < 0)
 					{
 						int a = 0;
 					}
 					y1 = height - 1;
-					x1 = ((double(j - r_length / 2)) - ((y1 - height / 2)*sin(temp_radian)) )/ cos(temp_radian) + (width / 2);
+					x1 = ((double(j - (r_length / 2))) - ((y1 - (height / 2))*sin(temp_radian)) )/ cos(temp_radian) + (width / 2);
 				}
 				if(x0<0||y0<0||x1<0||y1<0||x0>=width||x1>=width||y0>=height||y1>=height)
 					continue;
@@ -193,7 +284,7 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)
-			(*res_mat)[i][j] = 0;
+			(*res_mat)[i][j] = 255;
 	}
 
 
@@ -206,16 +297,7 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 		int x1 = line.second.first;
 		int y1 = line.second.second;
 
-		double tan = (y1 - y0) / (x1 - x0);
-
-		for (int i = x0; i < width; i++)  //暂时实现一个简单的连线函数 明天写~
-		{
-
-		}
-
-
-		(*res_mat)[line.first.second][line.first.first] = 155;
-		(*res_mat)[line.second.second][line.second.first] = 155;
+		set_line(res_mat,x0, y0, x1, y1);
 	}
 	return res_mat;
 	return nullptr;

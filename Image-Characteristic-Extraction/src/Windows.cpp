@@ -101,7 +101,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 	img_config config;
 	D3DCOLOR surface[30000];
-	LoadBmp(config, surface, "line.bmp");
+	LoadBmp(config, surface, "building.bmp");
 
 
 
