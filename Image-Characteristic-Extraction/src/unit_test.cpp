@@ -282,7 +282,9 @@ using namespace std;
 		typedef shared_ptr<D3DCOLOR>  sh_D3D;
 		sh_D3D *sh_res_mat = new sh_D3D ;
 		transform  trans(insert_mat);
-		Mat *after_hough_mat = trans.hough_transform(4,5, 1);
+
+		
+		Mat *after_hough_mat = trans.hough_transform(4,65, 1);
 		
 
 		after_hough_mat->show_main_mat();
@@ -297,6 +299,9 @@ using namespace std;
 		res_img = new image(*gobal_d3d, (*sh_res_mat).get(), insert_mat->get_img_config());
 
 		
+
+
+
 		return res_img;
 	
 

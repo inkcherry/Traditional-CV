@@ -101,7 +101,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 	img_config config;
 	D3DCOLOR surface[30000];
-	LoadBmp(config, surface, "building.bmp");
+	LoadBmp(config, surface, "line.bmp");
 
 
 
@@ -212,8 +212,11 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 	image* res_img ;
 	//image** after_threshold_mat;
+	image *after_treshhold = unit::test_treshold(mkk)[0];
+	Mat *m =new Mat(config,after_treshhold->get_inital_surface());
+	res_img = unit::test_hough(m);
 
-	res_img=unit::test_hough(mkk);
+	/*res_img=unit::test_hough(mkk);*/
 
 	//调试内容
 	//int a = (int)res_img[0];
@@ -247,6 +250,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR,INT )
 
 			d3d.BeginFrame();
 			img.s_show_initial_image(300, 300);
+			after_treshhold->s_show_initial_image(300, 100);
 			res_img->show_initial_image(100, 100);
 		
 			

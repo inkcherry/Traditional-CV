@@ -104,7 +104,7 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 
 				if (reset_y<0 || reset_y>height)
 					continue;
-				(*line_mat)[reset_y][j] = 0;
+				(*line_mat)[reset_y][j] = 255;
 			}
 		}
 		
@@ -125,7 +125,7 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 
 				if (reset_x<0 || reset_x>width)
 					continue;
-				(*line_mat)[i][reset_x] = 0;
+				(*line_mat)[i][reset_x] = 255;
 			}
 		}
 		
@@ -284,7 +284,7 @@ Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)
-			(*res_mat)[i][j] = 255;
+			(*res_mat)[i][j] = 0;
 	}
 
 
