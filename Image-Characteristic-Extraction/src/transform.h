@@ -1,5 +1,44 @@
 #include "filter.h"
 
+
+struct affine_mat //用于仿射变换的矩阵
+{	
+	double main_affine_mat[6] = { 0 };
+	int width, height;
+	affine_mat() {
+
+	}
+
+	Mat * operator *( Mat *&main_mat)const
+	{
+		
+		int res_mat_height = height * 2;
+		int res_mat_width = width * 2;
+		Mat *test_res_mat = new Mat(res_mat_height,res_mat_width);   //测试矩阵
+		
+		for(int y=0;y<res_mat_height;y++)
+			for (int x= 0; x < res_mat_width; x++)
+			{
+
+				int new_x = round((main_affine_mat[0] + main_affine_mat[1] + main_affine_mat[2])*(double)x);
+				int new_y = round((main_affine_mat[3] + main_affine_mat[4] + main_affine_mat[5])*(double)y);
+				
+				(*test_res_mat)[new_x][new_y] = (*main_mat)[y][x];
+			}
+	}
+	virtual ~affine_mat() {};   
+};
+struct rotate_affine_mat:public affine_mat
+{
+	rotate_affine_mat(double theta) {
+		main_affine_mat[4]=main_affine_mat[0] = cos(theta);
+		main_affine_mat[3] = sin(theta);
+		main_affine_mat[1] = -1 * main_affine_mat[3]; //-sin(theata);
+	}
+	~rotate_affine_mat() {};
+};
+
+
 class transform 
 {
 public:
@@ -20,6 +59,8 @@ public:
 
 	Mat* op(pair<kernel*,kernel*>kernel_,bool type);  //算子运算
 
+
+	Mat* affine();   //仿射变换
 
 
 	Mat* hough_transform(double rho,int r_tresh, bool is_binary_mat);             //霍夫变换 此行为需要先二值化  默认为已经二值化
