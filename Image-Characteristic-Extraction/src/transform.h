@@ -1,6 +1,7 @@
 #include "filter.h"
-
-
+#include <typeindex>
+#include <typeinfo>
+#include <map>
 struct affine_mat //用于仿射变换的矩阵
 {	
 	double main_affine_mat[6] = { 0 };
@@ -28,6 +29,11 @@ struct affine_mat //用于仿射变换的矩阵
 	}
 	virtual ~affine_mat() {};   
 };
+
+
+
+
+
 struct rotate_affine_mat:public affine_mat
 {
 	rotate_affine_mat(double theta) {
@@ -43,7 +49,7 @@ class transform
 {
 public:
 	enum OP_TYPE{SCHARR_OP=1,PREWITT_OP=2}; //另外两个算子 scharr  prewitt
-
+	enum AFFINE_TYPE { ROTATE=1 };
 	void canny(double threshod1,double threshod2, int size=3);  //size为sobel孔径大小
 	//自定义规格算子 sobel生成还没写 ！
 	Mat* sobel(int dx, int dy, int size, bool type = 1);
@@ -60,7 +66,7 @@ public:
 	Mat* op(pair<kernel*,kernel*>kernel_,bool type);  //算子运算
 
 
-	Mat* affine();   //仿射变换
+	Mat* affine(AFFINE_TYPE type,int parax,int para2);   //仿射变换
 
 
 	Mat* hough_transform(double rho,int r_tresh, bool is_binary_mat);             //霍夫变换 此行为需要先二值化  默认为已经二值化

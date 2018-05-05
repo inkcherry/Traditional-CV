@@ -54,6 +54,14 @@ for (int j = 0; j < height; j++)
 	return nullptr;
 }
 
+Mat * transform::affine(AFFINE_TYPE type, int parax, int para2)
+{
+	
+	map< AFFINE_TYPE, type_index > affine_chart;
+	affine_chart[ROTATE] = typeid(rotate_affine_mat);
+	return nullptr;
+}
+
 Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_)
 {
 	//确定累加数组大小
