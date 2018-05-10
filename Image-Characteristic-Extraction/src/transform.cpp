@@ -51,15 +51,19 @@ for (int j = 0; j < height; j++)
 	return res_mat;
 	return nullptr;
 
-	return nullptr;
 }
 
-Mat * transform::affine(AFFINE_TYPE type, int parax, int para2)
-{
+template<typename T> 
+Mat * transform::affine_(AFFINE_TYPE type, int para1, int para2)
+{	
+
 	
-	map< AFFINE_TYPE, type_index > affine_chart;
-	affine_chart[ROTATE] = typeid(rotate_affine_mat);
-	return nullptr;
+		affine_mat *affine_node = new T(para1, para2);   //旋转的话para是一个形式参数
+		Mat*  res_mat;
+		res_mat =(*affine_node)* main_mat;
+		res_mat->show_main_mat();
+		return nullptr;
+	
 }
 
 Mat * transform::hough_transform(double rho, int line_tresh, bool is_binary_mat_)

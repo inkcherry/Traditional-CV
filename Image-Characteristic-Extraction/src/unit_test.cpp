@@ -223,6 +223,14 @@ using namespace std;
 		test::show_mat(after_conv_mat, 3, 3);
 		return after_conv_mat;
 	}
+	Mat * unit::test_affine(Mat * insert_mat)
+	{
+
+		transform tr(insert_mat);
+		tr.affine(ROTATE, 30, 0);
+
+		return nullptr;
+	}
 	image ** unit::test_treshold(Mat *& insert_mat)
 	{
 		typedef shared_ptr<D3DCOLOR>  sh_D3D;
